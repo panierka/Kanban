@@ -24,12 +24,7 @@ namespace Kanban.DataAccessLayer.Repositories
 
                 while (reader.Read())
                 {
-                    var test = new Test()
-                    {
-                        Id = int.Parse(reader["id"].ToString()!),
-                        Name = reader["name"].ToString(),
-                        Score = int.Parse(reader["score"].ToString() ?? "0")
-                    };
+                    var test = new Test(reader);
 
                     tests.Add(test);
                 }
