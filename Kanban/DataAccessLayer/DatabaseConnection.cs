@@ -9,7 +9,7 @@ namespace Kanban.DataAccessLayer
 {
     internal class DatabaseConnection
     {
-        private readonly MySqlConnectionStringBuilder connectionStringBuilder = new();
+        private readonly MySqlConnectionStringBuilder connectionStringBuilder;
         private static DatabaseConnection? instance;
 
         public static DatabaseConnection Instance => instance ??= new();
@@ -18,9 +18,14 @@ namespace Kanban.DataAccessLayer
 
         private DatabaseConnection()
         {
-            connectionStringBuilder.UserID = Properties.Settings.Default.userID;
-            connectionStringBuilder.Server = Properties.Settings.Default.server;
-            connectionStringBuilder.Database = Properties.Settings.Default.database;
+            connectionStringBuilder = new()
+            {
+                UserID = Properties.Settings.Default.userID,
+                Password = Properties.Settings.Default.password,
+                Port = Properties.Settings.Default.port,
+                Server = Properties.Settings.Default.server,
+                Database = Properties.Settings.Default.database,
+            };
         }
     }
 }
