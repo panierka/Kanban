@@ -7,7 +7,7 @@ using MySql.Data.MySqlClient;
 
 namespace Kanban.DataAccessLayer
 {
-    internal class DatabaseConnection
+    public class DatabaseConnection
     {
         private readonly MySqlConnectionStringBuilder connectionStringBuilder;
         private static DatabaseConnection? instance;

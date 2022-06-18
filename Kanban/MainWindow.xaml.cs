@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using Kanban.DataAccessLayer;
+using Kanban.DataAccessLayer.Wrappers;
+using MySql.Data.MySqlClient;
+using System;
+using System.Windows;
 
 namespace Kanban
 {
@@ -7,7 +11,6 @@ namespace Kanban
         public MainWindow()
         {
             InitializeComponent();
-            string student = 'gh';
         }
     }
 }
