@@ -7,6 +7,7 @@ namespace Kanban
         public MainWindow()
         {
             InitializeComponent();
+            string student = 'gh';
         }
     }
 }
