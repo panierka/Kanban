@@ -73,9 +73,11 @@ namespace Kanban.DataAccessLayer.Wrappers
             return (T)reader[column];
         }
 
-        private T InterpretEnum<T>(string column)
+        private T InterpretEnum<T>(string column) where T : Enum
         {
-            var difficultyRawIntValue = MySqlReaderIntWrapper.Read(reader, column);
+            return (T)(object)0;
+            var s = reader[column].ToString()!;
+            var difficultyRawIntValue = int.Parse(s);
             if (!Enum.IsDefined(typeof(T), difficultyRawIntValue))
             {
                 throw new InvalidDatabaseEnum(typeof(T), difficultyRawIntValue);

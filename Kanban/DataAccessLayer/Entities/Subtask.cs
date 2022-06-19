@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Kanban.DataAccessLayer.Entities
 {
-    internal record Subtask
+    public record Subtask
     {
         public int? Id { get; set; }
         public string Text { get; set; }

@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccessLayer\Repositories\" />
     <Folder Include="Model\" />
     <Folder Include="View\" />
   </ItemGroup>
