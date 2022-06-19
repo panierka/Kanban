@@ -1,4 +1,5 @@
-﻿using Kanban.DataAccessLayer.Wrappers;
+﻿using Kanban.DataAccessLayer.Entities.Contracts;
+using Kanban.DataAccessLayer.Wrappers;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Kanban.DataAccessLayer.Entities
 {
-    internal record Project
+    internal record Project : IMySqlCompleteRecord
     {
         public int? Id { get; set; }
         public string Name { get; set; }
@@ -30,6 +31,11 @@ namespace Kanban.DataAccessLayer.Entities
             Description = interpreter.ReadStringNullable("description");
             StartDateTime = interpreter.ReadValue<DateTime>("start_datetime");
             DeadlineDateTime = interpreter.ReadValueNullable<DateTime>("deadline_datetime");
+        }
+
+        public string ToInsert()
+        {
+            return MySqlInsertBuilder.JoinAttributes(Name, Description, StartDateTime, DeadlineDateTime);
         }
     }
 }

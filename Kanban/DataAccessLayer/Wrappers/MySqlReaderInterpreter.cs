@@ -33,26 +33,6 @@ namespace Kanban.DataAccessLayer.Wrappers
             return reader[column].ToString();
         }
 
-        public T ReadEnum<T>(string column) where T : struct, Enum
-        {
-            if (reader[column] == DBNull.Value)
-            {
-                throw new DatabaseIsNullException(column);
-            }
-
-            return InterpretEnum<T>(column);
-        }
-
-        public T? ReadEnumNullable<T>(string column) where T : struct, Enum
-        {
-            if (reader[column] == DBNull.Value)
-            {
-                return null;
-            }
-
-            return InterpretEnum<T>(column);
-        }
-
         public T ReadValue<T>(string column) where T : struct
         {
             if (reader[column] == DBNull.Value)
@@ -71,19 +51,6 @@ namespace Kanban.DataAccessLayer.Wrappers
             }
 
             return (T)reader[column];
-        }
-
-        private T InterpretEnum<T>(string column) where T : Enum
-        {
-            return (T)(object)0;
-            var s = reader[column].ToString()!;
-            var difficultyRawIntValue = int.Parse(s);
-            if (!Enum.IsDefined(typeof(T), difficultyRawIntValue))
-            {
-                throw new InvalidDatabaseEnum(typeof(T), difficultyRawIntValue);
-            }
-
-            return (T)(object)difficultyRawIntValue;
         }
     }
 }

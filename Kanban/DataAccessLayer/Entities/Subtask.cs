@@ -1,4 +1,5 @@
-﻿using Kanban.DataAccessLayer.Wrappers;
+﻿using Kanban.DataAccessLayer.Entities.Contracts;
+using Kanban.DataAccessLayer.Wrappers;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Kanban.DataAccessLayer.Entities
 {
-    public record Subtask
+    public record Subtask : IMySqlInsertable
     {
         public int? Id { get; set; }
         public string Text { get; set; }
@@ -26,6 +27,11 @@ namespace Kanban.DataAccessLayer.Entities
             Id = interpreter.ReadValue<int>("id");
             Text = interpreter.ReadString("text");
             IsDone = interpreter.ReadValue<bool>("is_done");
+        }
+
+        public string ToInsert()
+        {
+            return MySqlInsertBuilder.JoinAttributes(Text, IsDone);
         }
     }
 }

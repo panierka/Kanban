@@ -10,7 +10,7 @@ using Kanban.DataAccessLayer.Repositories;
 
 namespace Kanban.DataAccessLayer.Entities
 {
-    public record AssignedTask
+    public record Job
     {
         public int? Id { get; set; }
         public string Name { get; set; }
@@ -22,12 +22,12 @@ namespace Kanban.DataAccessLayer.Entities
 
         public List<Subtask> Subtasks { get; set; } = new();
 
-        public AssignedTask(string name)
+        public Job(string name)
         {
             Name = name;
         }
 
-        public AssignedTask(MySqlDataReader reader)
+        public Job(MySqlDataReader reader)
         {
             var interpreter = new MySqlReaderInterpreter(reader);
 
