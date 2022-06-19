@@ -6,7 +6,31 @@
         xmlns:local="clr-namespace:Kanban"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+  <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+  <Grid>
+    <Grid.ColumnDefinitions>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+    <StackPanel Grid.Column="0">
+        <Rectangle
+           Width="60"
+           Height="70"
+           Fill="Blue"
+           VerticalAlignment="Bottom"/>
+    </StackPanel>
+  <StackPanel Grid.Column="1">
+        <Rectangle
+           Width="60"
+           Height="70"
+           Fill="Red"
+           VerticalAlignment="Center"
+  MouseMove="p_MouseMove"
+     AllowDrop="True"
+     DragEnter="p_DragEnter" DragLeave="p_DragLeave"
+     DragOver="p_DragOver" Drop="p_Drop"/>
+    </StackPanel>
+  </Grid>
 </Window>
