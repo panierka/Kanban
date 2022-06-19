@@ -8,9 +8,9 @@ using System.Windows.Shapes;
 using Kanban.ViewModel.Base;
 using System.Windows;
 
-namespace Kanban
+namespace Kanban.ViewModel
 {
-    internal class MainViewModel:BaseViewModel
+    internal class MainViewModel : BaseViewModel
     {
         private RelayCommand mousemove = null;
         public void Student(object sender)

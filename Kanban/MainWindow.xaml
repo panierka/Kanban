@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kanban"
+        xmlns:vm="clr-namespace:Kanban.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
   <Window.DataContext>
-        <local:MainViewModel/>
+        <vm:MainViewModel/>
     </Window.DataContext>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -26,11 +27,9 @@
            Width="60"
            Height="70"
            Fill="Red"
-           VerticalAlignment="Center"
-  MouseMove="p_MouseMove"
-     AllowDrop="True"
-     DragEnter="p_DragEnter" DragLeave="p_DragLeave"
-     DragOver="p_DragOver" Drop="p_Drop"/>
-    </StackPanel>
+           VerticalAlignment="Center"                     
+           AllowDrop="True"/>
+           <!-- MouseMove="p_MouseMove"-->
+        </StackPanel>
   </Grid>
 </Window>
