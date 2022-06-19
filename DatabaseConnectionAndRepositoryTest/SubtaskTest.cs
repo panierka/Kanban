@@ -19,7 +19,7 @@ namespace DatabaseConnectionAndRepositoryTest
 
                 while (reader.Read())
                 {
-                    AssignedTask task = new(reader);
+                    Job task = new(reader);
                     Console.WriteLine(string.Join("\n", task.Subtasks));
                 }
             }
