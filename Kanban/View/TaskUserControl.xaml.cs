@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Kanban.TaskUC
+namespace Kanban.View
 {
     /// <summary>
     /// Logika interakcji dla klasy TaskUserControl.xaml

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Kanban"
+        xmlns:local="clr-namespace:Kanban.View"
         xmlns:vm="clr-namespace:Kanban.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -70,15 +70,20 @@
                     FontSize="20"     
                     Text="        "/>
         </Grid>
-        <StackPanel 
+        <ListBox
+            ItemsSource="{Binding Projects}"
             Grid.Column="1">
-            <ListBox>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-        </StackPanel>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:TableUserControl/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

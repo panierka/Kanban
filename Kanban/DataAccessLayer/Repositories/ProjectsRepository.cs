@@ -26,10 +26,10 @@ namespace Kanban.DataAccessLayer.Repositories
 
         public static void UpdateProject(Project project, out bool successful)
         {
-            string attributeUpdates = $"name = '{project.Name}', " +
-                $"description = '{project.Description}', " +
-                $"start_datetime = '{project.StartDateTime}', " +
-                $"deadline_datetime = '{project.DeadlineDateTime}'";
+            string attributeUpdates = $"name = {MySqlVariableFormatter.Format(project.Name)}, " +
+                $"description = {MySqlVariableFormatter.Format(project.Description)}, " +
+                $"start_datetime = {MySqlVariableFormatter.Format(project.StartDateTime)}, " +
+                $"deadline_datetime = {MySqlVariableFormatter.Format(project.DeadlineDateTime)}";
             MySqlQueriesWrapper.Update(project, attributeUpdates, TABLE_NAME, out successful);
         }
 

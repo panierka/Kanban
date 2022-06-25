@@ -17,11 +17,9 @@ namespace Kanban.ViewModel
     {
         private readonly ProjectsManager projectsManager;
 
-        public string? Date { get; set; }
-
         public ObservableCollection<Project> Projects
         {
-            get => _projects!;
+            get => _projects;
             set
             {
                 _projects = value;
@@ -45,7 +43,7 @@ namespace Kanban.ViewModel
         }
 
         #region Backing fields
-        private ObservableCollection<Project>? _projects;
+        private ObservableCollection<Project> _projects = new();
         private ICommand? _createNewProject;
         #endregion
     }
