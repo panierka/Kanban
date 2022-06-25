@@ -29,7 +29,7 @@
            Fill="Red"
            VerticalAlignment="Center"                     
            AllowDrop="True"/>
-           <!-- MouseMove="p_MouseMove"-->
+            <!-- MouseMove="p_MouseMove"-->
         </StackPanel>
   </Grid>
 </Window>

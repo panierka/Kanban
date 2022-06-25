@@ -12,6 +12,8 @@ namespace Kanban.ViewModel
 {
     internal class MainViewModel : BaseViewModel
     {
+        public string? Date { get; set; }
+
         private RelayCommand mousemove = null;
         public void Student(object sender)
         {
