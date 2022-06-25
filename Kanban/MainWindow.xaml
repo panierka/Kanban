@@ -71,10 +71,14 @@
                     Text="        "/>
         </Grid>
         <StackPanel 
-            Grid.Column="1" 
-            Orientation="Horizontal">
-            <ListBox 
-                x:Name="tables_lb"/>
+            Grid.Column="1">
+            <ListBox>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
         </StackPanel>
     </Grid>
 </Window>
