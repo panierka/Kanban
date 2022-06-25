@@ -42,7 +42,6 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
                             <ListBox 
@@ -57,19 +56,12 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-
                             <Button
                                 Grid.Row="1"
                                 Command="{Binding CreateNewProject}"
-                                Content="Stwórz projekt"/>
-                            <Button
-                                Grid.Row="2"
-                                Command="{Binding EditCurrentProject}"
-                                Content="Edytuj projekt"/>
-                            <Button
-                                Grid.Row="3"
-                                Command="{Binding DeleteCurrentProject}"
-                                Content="Usuń projekt"/>
+                                Content="Stwórz projekt"
+                                Height="25"
+                                Width="175"/>
                         </Grid>
 
                         <TextBox 
@@ -122,6 +114,86 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem
+                Header="Projekty" IsEnabled="{Binding Std}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Button
+                                Grid.Row="0"
+                                Command="{Binding EditCurrentProject}"
+                                Content="Edytuj projekt"
+                                Height="25"
+                                Width="175"/>
+                        <Button
+                                Grid.Row="1"
+                                Command="{Binding DeleteCurrentProject}"
+                                Content="Usuń projekt"
+                                Height="25"
+                                Width="175"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <TextBox
+                                Grid.Row="0"
+                                Text="{Binding Name}"
+                                Height="25"
+                                Width="175"
+                                TextAlignment="Center"
+                                IsEnabled="{Binding trying}"/>
+                        <TextBox
+                                Grid.Row="1"
+                                Text="Opis"
+                                Height="80"
+                                Width="1000"
+                                IsEnabled="False"/>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Text="Data powstania:"
+                                Height="25"
+                                Width="175"/>
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="Termin:"
+                                Height="25"
+                                Width="175"/>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <ComboBox x:Name="origin_day" Width="30" Height="20" Margin="-200,5,5,5" IsEnabled="False"/>
+                                <ComboBox x:Name="origin_month" Width="30" Height="20" Margin="-80,5,5,5" IsEnabled="False"/>
+                                <ComboBox x:Name="origin_year" Width="50" Height="20" Margin="60,5,5,5" IsEnabled="False"/>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <ComboBox x:Name="deadline_day" Width="30" Height="20" Margin="-250,5,5,5" IsEnabled="False"/>
+                                <ComboBox x:Name="deadline_month" Width="30" Height="20" Margin="-130,5,5,5" IsEnabled="False"/>
+                                <ComboBox x:Name="deadline_year" Width="50" Height="20" Margin="20,5,5,5" IsEnabled="False"/>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </TabItem>
