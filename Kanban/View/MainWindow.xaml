@@ -118,7 +118,7 @@
                 </Grid>
             </TabItem>
             <TabItem
-                Header="Projekty" IsEnabled="{Binding Std}">
+                Header="Projekty" IsEnabled="{Binding IsCurrentProjectSelected}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

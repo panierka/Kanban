@@ -62,9 +62,12 @@ namespace Kanban.ViewModel
                 NotifyPropertyChanged(
                     nameof(CurrentProject), 
                     nameof(CurrentProjectName),
-                    nameof(CurrentProjectDescription));
+                    nameof(CurrentProjectDescription),
+                    nameof(IsCurrentProjectSelected));
             }
         }
+
+        public bool IsCurrentProjectSelected => CurrentProject is { };
 
         public bool Std
         {
