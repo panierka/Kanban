@@ -19,9 +19,9 @@ namespace Kanban.DataAccessLayer.Repositories
 
         public static void InsertProject(Project project, out bool successful)
         {
-            string attributes = MySqlInsertBuilder.JoinAttributes("name", "description",
+            string attributes = MySqlInsertBuilder.JoinNames("name", "description",
                 "start_datetime", "deadline_datetime");
-            MySqlQueriesWrapper.Insert(project, TABLE_NAME, attributes, out successful);
+            MySqlQueriesWrapper.Insert(project, attributes, TABLE_NAME, out successful);
         }
 
         public static void UpdateProject(Project project, out bool successful)

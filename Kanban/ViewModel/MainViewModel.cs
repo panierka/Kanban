@@ -7,35 +7,46 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using Kanban.ViewModel.Base;
 using System.Windows;
+using System.Collections.ObjectModel;
+using Kanban.DataAccessLayer.Entities;
+using Kanban.Model;
 
 namespace Kanban.ViewModel
 {
     internal class MainViewModel : BaseViewModel
     {
+        private readonly ProjectsManager projectsManager;
+
         public string? Date { get; set; }
 
-        private RelayCommand mousemove = null;
-        public void Student(object sender)
+        public ObservableCollection<Project> Projects
         {
-            Rectangle rectangle = sender as Rectangle;
-            if (rectangle != null && System.Windows.Input.Mouse.LeftButton == MouseButtonState.Pressed)
+            get => _projects!;
+            set
             {
-                DragDrop.DoDragDrop(rectangle,
-                                     rectangle.Fill.ToString(),
-                                     DragDropEffects.Copy);
+                _projects = value;
+                NotifyPropertyChanged(nameof(Projects));
             }
-            Console.WriteLine("std");
         }
-        public RelayCommand p_MouseMove
-        {
-            get
-            {
-                if (mousemove == null)
+
+        public ICommand CreateNewProject => _createNewProject ??= new RelayCommand
+            (
+                _ => 
                 {
-                    mousemove = new RelayCommand(Student, argument => true);
+                    projectsManager.CreateProject(new($"student {DateTime.Now.Minute}"));
+                    Projects = new(projectsManager.GetProjects());
                 }
-                return mousemove;
-            }
+            );
+
+        public MainViewModel()
+        {
+            projectsManager = new();
+            Projects = new(projectsManager.GetProjects());
         }
+
+        #region Backing fields
+        private ObservableCollection<Project>? _projects;
+        private ICommand? _createNewProject;
+        #endregion
     }
 }

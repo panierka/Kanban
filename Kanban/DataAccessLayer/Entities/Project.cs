@@ -17,6 +17,8 @@ namespace Kanban.DataAccessLayer.Entities
         public DateTime StartDateTime { get; set; }
         public DateTime? DeadlineDateTime { get; set; }
 
+        private const string DATE_FORMAT = "dd-MM-yyyy";
+
         public Project(string name)
         {
             Name = name;    
@@ -35,7 +37,10 @@ namespace Kanban.DataAccessLayer.Entities
 
         public string ToInsert()
         {
-            return MySqlInsertBuilder.JoinAttributes(Name, Description, StartDateTime, DeadlineDateTime);
+            return MySqlInsertBuilder.JoinAttributes(Name, 
+                Description, 
+                StartDateTime.ToString(DATE_FORMAT), 
+                DeadlineDateTime?.ToString(DATE_FORMAT));
         }
     }
 }
