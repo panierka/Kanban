@@ -16,6 +16,8 @@ namespace Kanban.ViewModel
     internal class MainViewModel : BaseViewModel
     {
         private readonly ProjectsManager projectsManager;
+        public bool trying = false;
+        public bool std = false;
 
         public ObservableCollection<Project> Projects
         {
@@ -31,6 +33,7 @@ namespace Kanban.ViewModel
             (
                 _ => 
                 {
+                    trying = true;
                     projectsManager.CreateProject(new($"student {DateTime.Now.Minute}"));
                     Projects = new(projectsManager.GetProjects());
                 }
@@ -54,6 +57,8 @@ namespace Kanban.ViewModel
             set
             {
                 _currentProject = value;
+                std = true;
+                Console.WriteLine("std");
                 NotifyPropertyChanged(
                     nameof(CurrentProject), 
                     nameof(CurrentProjectName),
@@ -61,6 +66,15 @@ namespace Kanban.ViewModel
             }
         }
 
+        public bool Std
+        {
+            get => std;
+            set
+            {
+                std = value;
+                NotifyPropertyChanged(nameof(Std));
+            }
+        }
         public string CurrentProjectName => CurrentProject?.Name ?? string.Empty;
         public string CurrentProjectDescription => CurrentProject?.Description ?? string.Empty;
 
