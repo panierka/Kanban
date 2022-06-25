@@ -7,29 +7,26 @@
         xmlns:vm="clr-namespace:Kanban.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-  <Window.DataContext>
-        <vm:MainViewModel/>
-    </Window.DataContext>
   <Grid>
     <Grid.ColumnDefinitions>
-          <ColumnDefinition/>
-          <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"/>
+    </Grid.ColumnDefinitions>
     <StackPanel Grid.Column="0">
-        <Rectangle
-           Width="60"
-           Height="70"
-           Fill="Blue"
-           VerticalAlignment="Bottom"/>
+     <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="60"/>
+        <RowDefinition Height="320"/>
+        <RowDefinition Height="50"/>
+      </Grid.RowDefinitions>
+        <TextBlock Text="Kanban" Grid.Row="0" Margin="10" HorizontalAlignment="Center" Width="100" TextAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <ListBox x:Name="projects_lb" Grid.Row="1" Margin="10" />
+        <TextBox x:Name="username" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          IsEnabled="false" Margin="10" FontSize="20" Text="        "/>
+      </Grid>
     </StackPanel>
-  <StackPanel Grid.Column="1">
-        <Rectangle
-           Width="60"
-           Height="70"
-           Fill="Red"
-           VerticalAlignment="Center"                     
-           AllowDrop="True"/>
-           <!-- MouseMove="p_MouseMove"-->
-        </StackPanel>
+  <StackPanel Grid.Column="1" Orientation="Horizontal">
+    <ListBox x:Name="tables_lb"/>
+  </StackPanel>
   </Grid>
 </Window>
