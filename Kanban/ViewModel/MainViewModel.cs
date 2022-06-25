@@ -36,6 +36,34 @@ namespace Kanban.ViewModel
                 }
             );
 
+        public ICommand EditCurrentProject => _editCurrentProject ??= new RelayCommand
+            (
+                _ => throw new NotImplementedException(),
+                _ => CurrentProject is { }
+            );
+
+        public ICommand DeleteCurrentProject => _deleteCurrentProject ??= new RelayCommand
+            (
+                _ => throw new NotImplementedException(),
+                _ => CurrentProject is { }
+            );
+
+        public Project? CurrentProject
+        {
+            get => _currentProject;
+            set
+            {
+                _currentProject = value;
+                NotifyPropertyChanged(
+                    nameof(CurrentProject), 
+                    nameof(CurrentProjectName),
+                    nameof(CurrentProjectDescription));
+            }
+        }
+
+        public string CurrentProjectName => CurrentProject?.Name ?? string.Empty;
+        public string CurrentProjectDescription => CurrentProject?.Description ?? string.Empty;
+
         public MainViewModel()
         {
             projectsManager = new();
@@ -45,6 +73,9 @@ namespace Kanban.ViewModel
         #region Backing fields
         private ObservableCollection<Project> _projects = new();
         private ICommand? _createNewProject;
+        private ICommand? _editCurrentProject;
+        private ICommand? _deleteCurrentProject;
+        private Project? _currentProject;
         #endregion
     }
 }
