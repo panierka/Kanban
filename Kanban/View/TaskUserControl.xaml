@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="Kanban.TaskUC.TaskUserControl"
+﻿<UserControl x:Class="Kanban.View.TaskUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Kanban.TaskUC"
+             xmlns:local="clr-namespace:Kanban.View"
              mc:Ignorable="d" 
              d:DesignHeight="120" d:DesignWidth="160">
     <Grid>
@@ -13,7 +13,7 @@
             <RowDefinition Height="15"/>
             <RowDefinition Height="15"/>
             <RowDefinition Height="15"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <TextBlock x:Name="task_name" Text="Nazwa" Grid.Column="0" Width="100" TextAlignment="Center" VerticalAlignment="Center" FontSize="5" IsEnabled="False" HorizontalAlignment="Center"/>
@@ -41,7 +41,19 @@
             <ComboBox x:Name="state" Grid.Column="1" IsEnabled="False" Width="60" FontSize="5" VerticalAlignment="Center" Height="10"/>
         </Grid>
         <Grid Grid.Row="5">
-            <ListBox x:Name="subtasks"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="add" Content="Dodaj" Grid.Column="0" FontSize="3" Width="30" Height="8"/>
+                <Button x:Name="remove" Content="Usuń" Grid.Column="1" FontSize="3" Width="30" Height="8"/>
+            </Grid>
+            <ListBox Grid.Row="1" x:Name="subtasks"/>
         </Grid>
     </Grid>
 </UserControl>
