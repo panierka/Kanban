@@ -1,5 +1,6 @@
 ﻿using Kanban.DataAccessLayer.Entities.Contracts;
 using Kanban.DataAccessLayer.Wrappers;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,16 @@ namespace Kanban.DataAccessLayer.Entities
             Name = name;
             Login = login;
             Password = password;
+        }
+
+        public User(MySqlDataReader reader)
+        {
+            var interpreter = new MySqlReaderInterpreter(reader);
+
+            Id = interpreter.ReadValue<int>("id");
+            Name = interpreter.ReadString("name");
+            Login = interpreter.ReadString("login");
+            Password = interpreter.ReadString("password");
         }
 
         public string ToInsert()

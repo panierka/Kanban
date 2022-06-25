@@ -16,7 +16,7 @@ namespace Kanban.DataAccessLayer.Repositories
         {
             return MySqlQueriesWrapper.SelectAll(TABLE_NAME, x => new Project(x));
         }
-
+        
         public static void InsertProject(Project project, out bool successful)
         {
             string attributes = MySqlInsertBuilder.JoinNames("name", "description",

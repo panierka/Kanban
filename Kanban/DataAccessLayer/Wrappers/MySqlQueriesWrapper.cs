@@ -51,6 +51,11 @@ namespace Kanban.DataAccessLayer.Wrappers
         public static void Update(IMySqlIdentifiable item, string attributes, string tableName, 
             out bool successful)
         {
+            if (item.Id is null)
+            {
+                throw new NoIdException(item);
+            }
+
             string whereCondition = $"where id={item.Id}";
             successful = false;
 
