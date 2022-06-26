@@ -13,12 +13,18 @@ namespace Kanban.DataAccessLayer.Wrappers
     {
         public static List<T> SelectAll<T>(string tableName, Func<MySqlDataReader, T> constructor)
         {
+            return SelectAllOnCondition(tableName, "1=1", constructor);
+        }
+
+        public static List<T> SelectAllOnCondition<T>(string tableName, string condition,
+            Func<MySqlDataReader, T> constructor)
+        {
             List<T> collection = new();
 
             using (var connection = DatabaseConnection.Instance.Connection)
             {
                 connection.Open();
-                string query = $"select * from {tableName}";
+                string query = $"select * from {tableName} where {condition}";
                 MySqlCommand command = new(query, connection);
                 var reader = command.ExecuteReader();
 
