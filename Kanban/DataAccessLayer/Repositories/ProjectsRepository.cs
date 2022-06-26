@@ -28,8 +28,8 @@ namespace Kanban.DataAccessLayer.Repositories
         {
             string attributeUpdates = $"name = {MySqlVariableFormatter.Format(project.Name)}, " +
                 $"description = {MySqlVariableFormatter.Format(project.Description)}, " +
-                $"start_datetime = {MySqlVariableFormatter.Format(project.StartDateTime)}, " +
-                $"deadline_datetime = {MySqlVariableFormatter.Format(project.DeadlineDateTime)}";
+                $"start_datetime = {MySqlVariableFormatter.Format(project.StartDateTime.ToString(Project.DATE_FORMAT))}, " +
+                $"deadline_datetime = {MySqlVariableFormatter.Format(project.DeadlineDateTime?.ToString(Project.DATE_FORMAT))}";
             MySqlQueriesWrapper.Update(project, attributeUpdates, TABLE_NAME, out successful);
         }
 

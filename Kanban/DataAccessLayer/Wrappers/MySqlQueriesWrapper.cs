@@ -89,7 +89,7 @@ namespace Kanban.DataAccessLayer.Wrappers
 
             using var connection = DatabaseConnection.Instance.Connection;
 
-            var query = $"delete from {tableName} where {mySqlCondition}";
+            var query = $"delete from {tableName} {mySqlCondition}";
             MySqlCommand command = new(query, connection);
             connection.Open();
             var rowsAffected = command.ExecuteNonQuery();
@@ -104,10 +104,10 @@ namespace Kanban.DataAccessLayer.Wrappers
         {
             using var connection = DatabaseConnection.Instance.Connection;
 
-            var query = $"select count(*) from {tableName} where {mySqlCondition}";
+            var query = $"select count(*) from {tableName} {mySqlCondition}";
             MySqlCommand command = new(query, connection);
             connection.Open();
-            int count = (int)command.ExecuteScalar();
+            var count = (long)command.ExecuteScalar();
 
             return count >= 1;
         }

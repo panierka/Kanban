@@ -16,8 +16,6 @@ namespace Kanban.ViewModel
     internal class MainViewModel : BaseViewModel
     {
         private readonly ProjectsManager projectsManager;
-        public bool trying = false;
-        public bool std = false;
 
         public ObservableCollection<Project> Projects
         {
@@ -33,21 +31,20 @@ namespace Kanban.ViewModel
             (
                 _ => 
                 {
-                    trying = true;
-                    projectsManager.CreateProject(new($"student {DateTime.Now.Minute}"));
-                    Projects = new(projectsManager.GetProjects());
+                    projectsManager.CreateProject();
+                    RefreshProjects();
                 }
-            );
-
-        public ICommand EditCurrentProject => _editCurrentProject ??= new RelayCommand
-            (
-                _ => throw new NotImplementedException(),
-                _ => CurrentProject is { }
             );
 
         public ICommand DeleteCurrentProject => _deleteCurrentProject ??= new RelayCommand
             (
-                _ => throw new NotImplementedException(),
+                _ =>
+                {
+                    SelectedTabIndex = 1;
+                    projectsManager.DeleteProject(CurrentProject!);
+                    CurrentProject = null;
+                    RefreshProjects();
+                },
                 _ => CurrentProject is { }
             );
 
@@ -57,8 +54,6 @@ namespace Kanban.ViewModel
             set
             {
                 _currentProject = value;
-                std = true;
-                Console.WriteLine("std");
                 NotifyPropertyChanged(
                     nameof(CurrentProject), 
                     nameof(CurrentProjectName),
@@ -68,31 +63,59 @@ namespace Kanban.ViewModel
         }
 
         public bool IsCurrentProjectSelected => CurrentProject is { };
-
-        public bool Std
+        public bool IsCurrentProjectEditable => projectsManager.CanUpdateProject(CurrentProject!);
+        public string CurrentProjectName
         {
-            get => std;
+            get => CurrentProject?.Name ?? string.Empty;
             set
             {
-                std = value;
-                NotifyPropertyChanged(nameof(Std));
+                CurrentProject!.Name = value;
+                projectsManager.UpdateProject(CurrentProject!);
+                NotifyPropertyChanged(nameof(CurrentProjectName));
+                RefreshProjects();
             }
         }
-        public string CurrentProjectName => CurrentProject?.Name ?? string.Empty;
-        public string CurrentProjectDescription => CurrentProject?.Description ?? string.Empty;
+            
+        public string CurrentProjectDescription
+        {
+            get => CurrentProject?.Description ?? string.Empty;
+            set
+            {
+                CurrentProject!.Description = value;
+                projectsManager.UpdateProject(CurrentProject!);
+                NotifyPropertyChanged(nameof(CurrentProjectDescription));
+                RefreshProjects();
+            }
+        }
+
+        public int SelectedTabIndex
+        {
+            get => _selectedTabIndex;
+            set
+            {
+                _selectedTabIndex = value;
+                NotifyPropertyChanged(nameof(SelectedTabIndex));
+            }
+        }
+
+        private void RefreshProjects()
+        {
+            Projects = new(projectsManager.GetProjects());
+            NotifyPropertyChanged(nameof(Projects));
+        }
 
         public MainViewModel()
         {
             projectsManager = new();
-            Projects = new(projectsManager.GetProjects());
+            RefreshProjects();
         }
 
         #region Backing fields
         private ObservableCollection<Project> _projects = new();
         private ICommand? _createNewProject;
-        private ICommand? _editCurrentProject;
         private ICommand? _deleteCurrentProject;
         private Project? _currentProject;
+        private int _selectedTabIndex;
         #endregion
     }
 }

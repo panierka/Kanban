@@ -17,7 +17,7 @@ namespace Kanban.DataAccessLayer.Entities
         public DateTime StartDateTime { get; set; }
         public DateTime? DeadlineDateTime { get; set; }
 
-        private const string DATE_FORMAT = "dd-MM-yyyy";
+        public static readonly string DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
         public Project(string name)
         {

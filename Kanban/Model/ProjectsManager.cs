@@ -18,9 +18,29 @@ namespace Kanban.Model
             return ProjectsRepository.GetAllProjects();
         }
 
-        public void CreateProject(Project project)
+        public void CreateProject()
         {
-            ProjectsRepository.InsertProject(project, out bool _);
+            Project project = new("Nowy projekt")
+            {
+                StartDateTime = DateTime.Now,                
+            };
+            ProjectsRepository.InsertProject(project, out _);
+        }
+
+        public bool CanUpdateProject(Project project)
+        {
+            //
+            return true;
+        }
+
+        public void UpdateProject(Project project)
+        {
+            ProjectsRepository.UpdateProject(project, out _);
+        }
+
+        public void DeleteProject(Project project)
+        {
+            ProjectsRepository.RemoveProject(project, out _);
         }
     }
 }

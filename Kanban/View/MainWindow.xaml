@@ -14,7 +14,8 @@
     </Window.DataContext>
 
     <Grid>
-        <TabControl>
+        <TabControl
+            SelectedIndex="{Binding SelectedTabIndex}">
             <TabItem
                 Header="Logowanie">
             </TabItem>
@@ -48,7 +49,8 @@
                                 x:Name="projects_lb"
                                 Grid.Row="0"
                                 ItemsSource="{Binding Projects}"
-                                SelectedItem="{Binding CurrentProject, Mode=TwoWay}">
+                                SelectedItem="{Binding CurrentProject, Mode=OneWayToSource}"
+                                SelectionMode="Single">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock
@@ -130,12 +132,6 @@
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <Button
-                                Grid.Row="0"
-                                Command="{Binding EditCurrentProject}"
-                                Content="Edytuj projekt"
-                                Height="25"
-                                Width="175"/>
-                        <Button
                                 Grid.Row="1"
                                 Command="{Binding DeleteCurrentProject}"
                                 Content="Usuń projekt"
@@ -151,17 +147,18 @@
                         </Grid.RowDefinitions>
                         <TextBox
                                 Grid.Row="0"
-                                Text="{Binding Name}"
+                                Text="{Binding CurrentProjectName, Mode=TwoWay}"
                                 Height="25"
-                                Width="175"
+                                Width="500"
                                 TextAlignment="Center"
-                                IsEnabled="{Binding trying}"/>
+                                VerticalContentAlignment="Center"
+                                IsEnabled="{Binding IsCurrentProjectEditable}"/>
                         <TextBox
                                 Grid.Row="1"
-                                Text="Opis"
+                                Text="{Binding CurrentProjectDescription, Mode=TwoWay}"
                                 Height="80"
                                 Width="1000"
-                                IsEnabled="False"/>
+                                IsEnabled="{Binding IsCurrentProjectEditable}"/>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
