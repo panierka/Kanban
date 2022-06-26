@@ -56,12 +56,13 @@
                 IsEnabled="False"/>
         </Grid>
         <ListBox 
-            x:Name="tasks_lb"                
+            x:Name="tasks_lb"      
+            ItemsSource="{Binding TargetTableJobs}"
             Grid.Row="3">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <local:TableUserControl 
+                    <local:TaskUserControl 
                             DataContext="{Binding Path=.}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>

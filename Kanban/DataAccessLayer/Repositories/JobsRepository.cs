@@ -46,5 +46,11 @@ namespace Kanban.DataAccessLayer.Repositories
 
             return jobs;
         }
+
+        public static void RemoveJob(Job job, out bool successful)
+        {
+            var condition = $"where id = {job.Id}";
+            MySqlQueriesWrapper.Remove(condition, JOB_NAME, out successful);
+        }
     }
 }

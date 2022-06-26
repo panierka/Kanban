@@ -15,14 +15,14 @@ namespace Kanban.ViewModel
 {
     internal class JobViewModel
     {
-        private JobsManager jobsManager;
-        private Job x;
-        private TablesManager tablesManager;
+        public Job TargetJob { get; init; }
 
-        public JobViewModel(Job x, TablesManager tablesManager)
+        private JobsManager jobsManager;
+
+        public JobViewModel(Job job, JobsManager jobsManager)
         {
-            this.x = x;
-            this.tablesManager = tablesManager;
+            TargetJob = job;
+            this.jobsManager = jobsManager;
         }
     }
 }
