@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Kanban.DataAccessLayer.Entities;
+using Kanban.DataAccessLayer.Wrappers;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +11,11 @@ namespace Kanban.DataAccessLayer.Repositories
 {
     internal static class UsersRepository
     {
-        public static bool GetUserFromLoginAndPassword(string login, string password)
+        public static User? GetUserFromLoginAndPassword(string login, string password)
         {
-            using var connection = DatabaseConnection.Instance.Connection;
-
-            var query = $"select * from users where " +
-                $"users.login = '{login}' " +
-                $"and users.password = '{password}'";
-            MySqlCommand command = new(query, connection);
-            connection.Open();
-            int count = (int)command.ExecuteScalar();
-
-            return count >= 1;
+            var condition = $"where login = '{login}' and password = '{password}'";
+            User? user = MySqlQueriesWrapper.GetRecord(condition, "users", x => new User(x));
+            return user;
         }
     }
 }

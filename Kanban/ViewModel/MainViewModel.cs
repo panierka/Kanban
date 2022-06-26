@@ -15,9 +15,10 @@ namespace Kanban.ViewModel
 {
     internal class MainViewModel : BaseViewModel
     {
-        private readonly ProjectsManager projectsManager;
-        private readonly TablesManager tablesManager;
-        private readonly JobsManager jobsManager;
+        private readonly UserAccountController userAccountController;
+        private ProjectsManager projectsManager;
+        private TablesManager tablesManager;
+        private JobsManager jobsManager;
 
         public ObservableCollection<Project> Projects
         {
@@ -150,10 +151,18 @@ namespace Kanban.ViewModel
 
         public MainViewModel()
         {
-            projectsManager = new();
-            tablesManager = new();
-            jobsManager = new();
+            userAccountController = new();
+            UpdateUser(null);
+            userAccountController.OnUserChanged += UpdateUser;
+
             RefreshProjects();
+
+            void UpdateUser(User? user)
+            {
+                projectsManager = new(user);
+                tablesManager = new(user);
+                jobsManager = new(user);
+            }
         }
 
         #region Backing fields

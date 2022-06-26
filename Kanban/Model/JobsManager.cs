@@ -10,6 +10,13 @@ namespace Kanban.Model
 {
     internal class JobsManager
     {
+        private User? user;
+
+        public JobsManager(User? user)
+        {
+            this.user = user;
+        }
+
         public Job CreateJob(int projectId)
         {
             Job job = new("Nowe zadanie")

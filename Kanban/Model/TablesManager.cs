@@ -10,6 +10,13 @@ namespace Kanban.Model
 {
     internal class TablesManager
     {
+        private User? user;
+
+        public TablesManager(User? user)
+        {
+            this.user = user;
+        }
+
         public Table CreateTable(int projectId)
         {
             Table table = new("Nowa tablica", projectId)

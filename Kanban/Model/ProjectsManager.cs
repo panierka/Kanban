@@ -10,7 +10,12 @@ namespace Kanban.Model
 {
     internal class ProjectsManager
     {
-        // private User user;
+        private User? user;
+
+        public ProjectsManager(User? user)
+        {
+            this.user = user;
+        }
 
         public List<Project> GetProjects()
         {

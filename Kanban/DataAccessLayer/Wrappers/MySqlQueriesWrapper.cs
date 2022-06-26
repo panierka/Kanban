@@ -111,5 +111,23 @@ namespace Kanban.DataAccessLayer.Wrappers
 
             return count >= 1;
         }
+
+        public static T? GetRecord<T>(string mySqlCondition, string tableName, 
+            Func<MySqlDataReader, T> constructor) where T : class
+        {
+            using var connection = DatabaseConnection.Instance.Connection;
+            var query = $"select * from {tableName} {mySqlCondition}";
+            MySqlCommand command = new(query, connection);
+            connection.Open();
+            var reader = command.ExecuteReader();
+
+            if (!reader.Read())
+            {
+                return null;
+            }
+
+            T record = constructor(reader);
+            return record;
+        }
     }
 }
