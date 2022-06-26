@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Kanban.Model
 {
-    internal class JobsManager
+    internal class SubtasksManager
     {
         private User? user;
 
@@ -17,20 +17,16 @@ namespace Kanban.Model
             this.user = user;
         }
 
-        public Job CreateJob(int tableId)
+        public Subtask CreateSubtask(int jobId)
         {
-            Job job = new("Nowe zadanie", tableId, 1)
-            {
-                StartDate = DateTime.Now
-            };
-
-            JobsRepository.InsertJob(job, out _);
-            return job;
+            Subtask subtask = new("Nowe podzadanie", jobId);
+            SubtaskRepository.InsertSubtask(subtask, out _);
+            return subtask;
         }
 
-        internal void DeleteJob(Job job)
+        internal void DeleteSubtask(Subtask subtask)
         {
-            JobsRepository.RemoveJob(job, out _);
+            SubtaskRepository.RemoveSubtask(subtask, out _);
         }
     }
 }
