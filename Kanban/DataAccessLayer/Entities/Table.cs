@@ -1,4 +1,5 @@
 ﻿using Kanban.DataAccessLayer.Entities.Contracts;
+using Kanban.DataAccessLayer.Repositories;
 using Kanban.DataAccessLayer.Wrappers;
 using MySql.Data.MySqlClient;
 using System;
@@ -16,6 +17,7 @@ namespace Kanban.DataAccessLayer.Entities
         public string? Description { get; set; }
         public DateTime StartDateTime { get; set; }
 
+        public List<Job> Jobs { get; set; } = new();
         public int? ProjectId { get; set; }
 
         public Table(string name, int projectId)
@@ -34,6 +36,7 @@ namespace Kanban.DataAccessLayer.Entities
             StartDateTime = interpreter.ReadValue<DateTime>("start_datetime");
 
             ProjectId = projectId;
+            RefreshJobs();
         }
 
         public string ToInsert()
@@ -43,6 +46,10 @@ namespace Kanban.DataAccessLayer.Entities
                Description,
                StartDateTime.ToString(MySqlVariableFormatter.DATE_FORMAT),
                ProjectId);
+        }
+        public void RefreshJobs()
+        {
+            Jobs = JobsRepository.GetJobsFromTable(Id!.Value);
         }
     }
 }
