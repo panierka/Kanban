@@ -17,15 +17,11 @@ namespace Kanban.Model
             private set
             {
                 _currentlyLoggedUser = value;
-
-                if (CurrentlyLoggedUser is { })
-                {
-                    OnUserChanged?.Invoke(CurrentlyLoggedUser!);
-                }
+                OnUserChanged?.Invoke(CurrentlyLoggedUser);
             }
         }
 
-        public event Action<User>? OnUserChanged;
+        public event Action<User?>? OnUserChanged;
 
         public void TryLogin(string login, string password)
         {
@@ -40,5 +36,19 @@ namespace Kanban.Model
         }
 
         private User? _currentlyLoggedUser;
+
+        internal void Register(string name, string login, string password)
+        {
+            if (UsersRepository.CheckIfLoginIsTaken(login))
+            {
+                MessageBox.Show("Ten login jest zajęty.");
+                return;
+            }
+
+            User newUser = new(name, login, password);
+            UsersRepository.AddUser(newUser);
+
+            MessageBox.Show($"Pomyślnie utworzono konto dla {name}");
+        }
     }
 }

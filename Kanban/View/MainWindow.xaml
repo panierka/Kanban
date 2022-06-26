@@ -18,9 +18,115 @@
             SelectedIndex="{Binding SelectedTabIndex}">
             <TabItem
                 Header="Logowanie">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="4*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid
+                        Margin="10"
+                        Grid.Column="1"
+                        Grid.Row="1">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Login:" HorizontalAlignment="Right" Grid.Row="1" Margin="0,0,10,0"/>
+                        <TextBlock Text="Hasło:" HorizontalAlignment="Right" Grid.Row="2" Margin="0,0,10,0"/>
+                        <TextBox 
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{Binding UserLogin, Mode=TwoWay}"
+                            HorizontalContentAlignment="Center"/>
+                        <PasswordBox 
+                            Name="password_box"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalContentAlignment="Center"/>
+                        <Button 
+                            Grid.Row="3" 
+                            Grid.Column="1"
+                            Command="{Binding TryLogIn}"
+                            CommandParameter="{Binding ElementName=password_box}"
+                            Content="Zaloguj"/>
+                    </Grid>
+
+                    <Grid
+                        Margin="10"
+                        Grid.Column="3"
+                        Grid.Row="1">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Nazwa:" HorizontalAlignment="Right" Grid.Row="0" Margin="0,0,10,0"/>
+                        <TextBlock Text="Login:" HorizontalAlignment="Right" Grid.Row="1" Margin="0,0,10,0"/>
+                        <TextBlock Text="Hasło:" HorizontalAlignment="Right" Grid.Row="2" Margin="0,0,10,0"/>
+                        <TextBox 
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Text="{Binding NewUserName, Mode=TwoWay}"
+                            HorizontalContentAlignment="Center"/>
+                        <TextBox 
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{Binding NewUserLogin, Mode=TwoWay}"
+                            HorizontalContentAlignment="Center"/>
+                        <PasswordBox 
+                            Name="password_box1"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalContentAlignment="Center"/>
+                        <Button 
+                            Grid.Row="3" 
+                            Grid.Column="1"
+                            Command="{Binding Register}"
+                            CommandParameter="{Binding ElementName=password_box1}"
+                            Content="Zarejestruj"/>
+                    </Grid>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        VerticalAlignment="Top"
+                        Margin="60, 12, 12, 12"
+                        TextWrapping="Wrap"
+                        Text="{Binding UserAccountInformation}"/>
+                </Grid>
+                
             </TabItem>
             <TabItem
-                Header="Zadania">
+                Header="Zadania"
+                IsEnabled="{Binding IsAnyUserLogged}">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -142,7 +248,8 @@
                 </Grid>
             </TabItem>
             <TabItem
-                Header="Projekty" IsEnabled="{Binding IsCurrentProjectSelected}">
+                Header="Projekty" 
+                IsEnabled="{Binding CanProjectSettingsBeDisplayed}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
