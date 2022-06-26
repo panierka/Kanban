@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Kanban.View"
              xmlns:vm="clr-namespace:Kanban.ViewModel" 
-             d:DataContext="{d:DesignInstance Type=vm:TableHandler}"
+             d:DataContext="{d:DesignInstance Type=vm:TableViewModel}"
              mc:Ignorable="d">
 
     <Grid>
@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <TextBox 
             x:Name="table_name" 
-            Text="{Binding Table.Name}"
+            Text="{Binding TargetTable.Name}"
             Grid.Row="0"
             TextAlignment="Center" 
             VerticalAlignment="Center"/>
@@ -41,7 +41,7 @@
                 x:Name="add_button" 
                 Content="Dodaj" 
                 Grid.Column="0"
-                Command="{Binding ViewModel.CreateNewJob}"/>
+                Command="{Binding CreateNewJob}"/>
             <Button 
                 x:Name="modify_button" 
                 Content="Edytuj" 

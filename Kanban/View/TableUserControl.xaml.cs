@@ -20,23 +20,7 @@ namespace Kanban.View
     /// Logika interakcji dla klasy TableUserControl.xaml
     /// </summary>
     public partial class TableUserControl : UserControl
-    {
-        public static readonly DependencyProperty TableProperty =
-            DependencyProperty.Register(
-              nameof(Table),
-              typeof(Table),
-              typeof(TableUserControl),
-              new PropertyMetadata(null));
-
-        /// <summary>
-        /// Publiczna właściwość Text
-        /// </summary>
-        public Table Table
-        {
-            get { return (Table)GetValue(TableProperty); }
-            set { SetValue(TableProperty, value); }
-        }
-
+    {       
         public TableUserControl()
         {
             InitializeComponent();

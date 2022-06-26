@@ -34,7 +34,7 @@ namespace Kanban.ViewModel
             }
         }
 
-        public ObservableCollection<TableHandler> CurrentProjectTables
+        public ObservableCollection<TableViewModel> CurrentProjectTables
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Kanban.ViewModel
                     return new();
                 }
 
-                return new(new List<Table>(CurrentProject.Tables).Select(x => new TableHandler(x)));
+                return new(CurrentProject.Tables.Select(x => new TableViewModel(x)));
             }
         }
 

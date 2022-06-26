@@ -15,15 +15,20 @@ namespace Kanban.ViewModel
 {
     internal class TableViewModel : BaseViewModel
     {
-        public Table? Tab { get; set; }
+        public Table TargetTable { get; set; }
 
         public ICommand CreateNewJob => _createNewJob ??= new RelayCommand
             (
                 _ =>
                 {
-                    MessageBox.Show("test");
+                    MessageBox.Show("test dodawania");
                 }
             );
+
+        public TableViewModel(Table targetTable)
+        {
+            TargetTable = targetTable;
+        }
 
         private ICommand? _createNewJob;
     }
