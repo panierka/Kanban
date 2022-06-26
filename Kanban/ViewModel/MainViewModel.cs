@@ -138,17 +138,6 @@ namespace Kanban.ViewModel
             NotifyPropertyChanged(nameof(Projects));
         }
 
-        public ICommand CreateNewJob => _createNewJob ??= new RelayCommand
-            (
-                _ =>
-                {
-                    jobsManager.CreateJob(CurrentProject!.Id!.Value);
-                    CurrentProject.RefreshTables();
-                    NotifyPropertyChanged(nameof(CurrentProjectTables));
-                },
-                _ => CurrentProject is { } && CurrentProject.Id is { }
-            );
-
         public MainViewModel()
         {
             userAccountController = new();
@@ -173,7 +162,6 @@ namespace Kanban.ViewModel
         private int _selectedTabIndex;
         private ICommand? _createTable;
         private ICommand? _deleteTable;
-        private ICommand? _createNewJob;
         #endregion
     }
 }

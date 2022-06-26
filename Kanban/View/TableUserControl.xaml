@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Kanban.View"
              mc:Ignorable="d">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -36,7 +37,8 @@
             <Button 
                 x:Name="add_button" 
                 Content="Dodaj" 
-                Grid.Column="0"/>
+                Grid.Column="0"
+                Command="{Binding CreateNewJob}"/>
             <Button 
                 x:Name="modify_button" 
                 Content="Edytuj" 
