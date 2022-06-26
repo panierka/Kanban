@@ -83,6 +83,12 @@ namespace Kanban.ViewModel
             get => _currentProject;
             set
             {
+                if (CurrentProject == value)
+                {
+                    return;
+                }
+
+                //MessageBox.Show("student");
                 _currentProject = value;
                 NotifyPropertyChanged(
                     nameof(CurrentProject), 
