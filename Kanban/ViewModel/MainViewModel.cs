@@ -93,10 +93,13 @@ namespace Kanban.ViewModel
                     nameof(CurrentProjectName),
                     nameof(CurrentProjectDescription),
                     nameof(IsCurrentProjectSelected),
-                    nameof(CurrentProjectTables));
+                    nameof(CurrentProjectTables),
+                    nameof(CanProjectSettingsBeDisplayed));
             }
         }
 
+        public bool CanProjectSettingsBeDisplayed => IsCurrentProjectSelected
+            && projectsManager.CanDisplayProjectSettings();
         public bool IsCurrentProjectSelected => CurrentProject is { };
         public bool IsCurrentProjectEditable => projectsManager.CanUpdateProject(CurrentProject!);
         public string CurrentProjectName
@@ -147,7 +150,9 @@ namespace Kanban.ViewModel
                 x =>
                 {
                     userAccountController.TryLogin(UserLogin!, (x as PasswordBox)!.Password);
-                    NotifyPropertyChanged(nameof(UserAccountInformation));
+                    NotifyPropertyChanged(
+                        nameof(UserAccountInformation),
+                        nameof(IsAnyUserLogged));
                 },
                 x => !string.IsNullOrEmpty(UserLogin) && !string.IsNullOrEmpty((x as PasswordBox)!.Password)
             );
@@ -177,6 +182,8 @@ namespace Kanban.ViewModel
             }
         }
 
+        public bool IsAnyUserLogged => userAccountController.CurrentlyLoggedUser is { };
+
         public MainViewModel()
         {
             userAccountController = new();
@@ -185,6 +192,11 @@ namespace Kanban.ViewModel
             jobsManager = new();
 
             userAccountController.OnUserChanged += UpdateUser;
+            userAccountController.OnUserChanged += _ =>
+            {
+                CurrentProject = null;
+                NotifyPropertyChanged(nameof(CanProjectSettingsBeDisplayed));
+            };
 
             RefreshProjects();
 

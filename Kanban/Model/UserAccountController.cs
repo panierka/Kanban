@@ -17,15 +17,11 @@ namespace Kanban.Model
             private set
             {
                 _currentlyLoggedUser = value;
-
-                if (CurrentlyLoggedUser is { })
-                {
-                    OnUserChanged?.Invoke(CurrentlyLoggedUser!);
-                }
+                OnUserChanged?.Invoke(CurrentlyLoggedUser);
             }
         }
 
-        public event Action<User>? OnUserChanged;
+        public event Action<User?>? OnUserChanged;
 
         public void TryLogin(string login, string password)
         {

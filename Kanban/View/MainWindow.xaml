@@ -125,7 +125,8 @@
                 
             </TabItem>
             <TabItem
-                Header="Zadania">
+                Header="Zadania"
+                IsEnabled="{Binding IsAnyUserLogged}">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -247,7 +248,8 @@
                 </Grid>
             </TabItem>
             <TabItem
-                Header="Projekty" IsEnabled="{Binding IsCurrentProjectSelected}">
+                Header="Projekty" 
+                IsEnabled="{Binding CanProjectSettingsBeDisplayed}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

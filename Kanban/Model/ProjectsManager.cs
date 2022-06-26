@@ -34,9 +34,18 @@ namespace Kanban.Model
             return project;
         }
 
+        public bool CanDisplayProjectSettings()
+        {
+            return user is { };
+        }
+
         public bool CanUpdateProject(Project project)
         {
-            //
+            if (user is null)
+            {
+                return false;
+            }
+
             return true;
         }
 
