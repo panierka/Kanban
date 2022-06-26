@@ -17,7 +17,7 @@ namespace Kanban.ViewModel
     {
         private readonly ProjectsManager projectsManager;
         private readonly TablesManager tablesManager;
-
+        private readonly JobsManager tasksManager;
         public ObservableCollection<Project> Projects
         {
             get => _projects;
@@ -78,6 +78,17 @@ namespace Kanban.ViewModel
                 _ => CurrentProject is { } && CurrentProject.Id is { }
             );
 
+        public ICommand CreateTask => _createTask ??= new RelayCommand
+            (
+                _ =>
+                {
+                    tasksManager.CreateTask(CurrentProject!.Id!.Value);
+                    CurrentProject.RefreshTables();
+                    NotifyPropertyChanged(nameof(CurrentTableTasks));
+                },
+                _ => CurrentProject is { } && CurrentProject.Id is { }
+            );
+
         public Project? CurrentProject
         {
             get => _currentProject;
@@ -88,7 +99,6 @@ namespace Kanban.ViewModel
                     return;
                 }
 
-                //MessageBox.Show("student");
                 _currentProject = value;
                 NotifyPropertyChanged(
                     nameof(CurrentProject), 
