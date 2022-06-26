@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Kanban.DataAccessLayer.Entities
 {
-    public record Subtask : IMySqlInsertable
+    public class Subtask : IMySqlInsertable
     {
         public int? Id { get; set; }
         public string Text { get; set; }
