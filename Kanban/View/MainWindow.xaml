@@ -119,7 +119,7 @@
                                 <DataTemplate>
                                     <local:TableUserControl 
                                         Width="400"
-                                        Table="{Binding Path=.}"/>
+                                        DataContext="{Binding Path=.}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
