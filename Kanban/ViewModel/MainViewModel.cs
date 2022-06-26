@@ -23,11 +23,12 @@ namespace Kanban.ViewModel
             get => _projects;
             set
             {
+                int? lastId = CurrentProject?.Id;
                 _projects = value;
                 NotifyPropertyChanged(nameof(Projects));
                 CurrentProject = Projects.Where(
                     x => x.Id is not null && 
-                    x.Id == CurrentProject?.Id).FirstOrDefault();
+                    x.Id == lastId).FirstOrDefault();
             }
         }
 
@@ -94,11 +95,14 @@ namespace Kanban.ViewModel
             get => _currentProject;
             set
             {
+<<<<<<< HEAD
                 if (CurrentProject == value)
                 {
                     return;
                 }
 
+=======
+>>>>>>> 8ee880f809a1de3e7533425bc689d52fd000dfd2
                 _currentProject = value;
                 NotifyPropertyChanged(
                     nameof(CurrentProject), 
