@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Kanban.DataAccessLayer.Entities
 {
-    internal class User : IMySqlInsertable
+    internal class User : IMySqlCompleteRecord
     {
         public int? Id { get; set; }
         public string Name { get; set; }

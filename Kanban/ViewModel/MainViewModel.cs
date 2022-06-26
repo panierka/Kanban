@@ -138,6 +138,23 @@ namespace Kanban.ViewModel
             NotifyPropertyChanged(nameof(Projects));
         }
 
+        public string? UserLogin { get; set; }
+        public string? UserName { get; set; }
+
+        public ICommand TryLogIn => _tryLogIn ??= new RelayCommand
+            (
+                x => userAccountController.TryLogin(UserLogin!, (x as string)!),
+                x => string.IsNullOrEmpty(UserLogin) && x as string is not null
+            );
+
+        public ICommand Register => _register ??= new RelayCommand
+            (
+                x => userAccountController.Register(UserName!, UserLogin!, (x as string)!),
+                x =>
+                string.IsNullOrEmpty(UserLogin) && 
+                string.IsNullOrEmpty(UserName) && x as string is not null
+            );
+
         public MainViewModel()
         {
             userAccountController = new();
@@ -165,6 +182,8 @@ namespace Kanban.ViewModel
         private int _selectedTabIndex;
         private ICommand? _createTable;
         private ICommand? _deleteTable;
+        private ICommand? _tryLogIn;
+        private ICommand? _register;
         #endregion
     }
 }
