@@ -12,12 +12,12 @@ namespace Kanban.Model
     {
         private User? user;
 
-        public JobsManager(User? user)
+        public void SetUser(User? user)
         {
             this.user = user;
         }
 
-        public Job CreateJob(int projectId)
+        public Job CreateJob(int tableId)
         {
             Job job = new("Nowe zadanie")
             {

@@ -27,11 +27,6 @@ namespace Kanban.Model
 
         public event Action<User>? OnUserChanged;
 
-        public UserAccountController()
-        {
-            CurrentlyLoggedUser = new("kuba mruz", "srogimrus", "123");
-        }
-
         public void TryLogin(string login, string password)
         {
             var user = UsersRepository.GetUserFromLoginAndPassword(login, password);

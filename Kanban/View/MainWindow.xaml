@@ -118,7 +118,8 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <local:TableUserControl 
-                                        Width="400"/>
+                                        Width="400"
+                                        Table="{Binding Path=.}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

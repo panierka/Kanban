@@ -12,9 +12,9 @@ namespace Kanban.Model
     {
         private User? user;
 
-        public ProjectsManager(User? user)
+        public void SetUser(User? user)
         {
-            this.user = user;
+            this.user = user;   
         }
 
         public List<Project> GetProjects()

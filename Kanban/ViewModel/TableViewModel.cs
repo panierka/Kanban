@@ -13,15 +13,18 @@ using Kanban.Model;
 
 namespace Kanban.ViewModel
 {
-    internal class TableViewModel:BaseViewModel
+    internal class TableViewModel : BaseViewModel
     {
-        private ICommand? _createNewJob;
+        public Table? Tab { get; set; }
+
         public ICommand CreateNewJob => _createNewJob ??= new RelayCommand
             (
                 _ =>
                 {
-
+                    MessageBox.Show("test");
                 }
             );
+
+        private ICommand? _createNewJob;
     }
 }

@@ -12,7 +12,7 @@ namespace Kanban.Model
     {
         private User? user;
 
-        public TablesManager(User? user)
+        public void SetUser(User? user)
         {
             this.user = user;
         }
