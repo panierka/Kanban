@@ -94,12 +94,12 @@
                         <TextBox 
                             Grid.Row="0"
                             Grid.Column="1"
-                            Text="{Binding UserName, Mode=TwoWay}"
+                            Text="{Binding NewUserName, Mode=TwoWay}"
                             HorizontalContentAlignment="Center"/>
                         <TextBox 
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding UserLogin, Mode=TwoWay}"
+                            Text="{Binding NewUserLogin, Mode=TwoWay}"
                             HorizontalContentAlignment="Center"/>
                         <PasswordBox 
                             Name="password_box1"
@@ -109,10 +109,18 @@
                         <Button 
                             Grid.Row="3" 
                             Grid.Column="1"
-                            Command="{Binding TryLogIn}"
+                            Command="{Binding Register}"
                             CommandParameter="{Binding ElementName=password_box1}"
                             Content="Zarejestruj"/>
                     </Grid>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        VerticalAlignment="Top"
+                        Margin="60, 12, 12, 12"
+                        TextWrapping="Wrap"
+                        Text="{Binding UserAccountInformation}"/>
                 </Grid>
                 
             </TabItem>

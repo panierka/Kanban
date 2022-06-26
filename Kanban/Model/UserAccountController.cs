@@ -51,6 +51,8 @@ namespace Kanban.Model
 
             User newUser = new(name, login, password);
             UsersRepository.AddUser(newUser);
+
+            MessageBox.Show($"Pomyślnie utworzono konto dla {name}");
         }
     }
 }

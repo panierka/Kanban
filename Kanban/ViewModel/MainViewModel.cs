@@ -10,6 +10,7 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using Kanban.DataAccessLayer.Entities;
 using Kanban.Model;
+using System.Windows.Controls;
 
 namespace Kanban.ViewModel
 {
@@ -143,17 +144,38 @@ namespace Kanban.ViewModel
 
         public ICommand TryLogIn => _tryLogIn ??= new RelayCommand
             (
-                x => userAccountController.TryLogin(UserLogin!, (x as string)!),
-                x => string.IsNullOrEmpty(UserLogin) && x as string is not null
+                x =>
+                {
+                    userAccountController.TryLogin(UserLogin!, (x as PasswordBox)!.Password);
+                    NotifyPropertyChanged(nameof(UserAccountInformation));
+                },
+                x => !string.IsNullOrEmpty(UserLogin) && !string.IsNullOrEmpty((x as PasswordBox)!.Password)
             );
+
+        public string? NewUserLogin { get; set; }
+        public string? NewUserName { get; set; }
 
         public ICommand Register => _register ??= new RelayCommand
             (
-                x => userAccountController.Register(UserName!, UserLogin!, (x as string)!),
+                x => userAccountController.Register(NewUserName!, NewUserLogin!, (x as PasswordBox)!.Password),
                 x =>
-                string.IsNullOrEmpty(UserLogin) && 
-                string.IsNullOrEmpty(UserName) && x as string is not null
+                !string.IsNullOrEmpty(NewUserLogin) &&
+                !string.IsNullOrEmpty(NewUserName) && !string.IsNullOrEmpty((x as PasswordBox)!.Password)
             );
+
+        public string UserAccountInformation
+        {
+            get
+            {
+                if (userAccountController.CurrentlyLoggedUser is null)
+                {
+                    return "Aktualnie nie jesteś zalogowany.";
+                }
+
+                return $"Zalogowano jako {userAccountController.CurrentlyLoggedUser.Name} " +
+                    $"({userAccountController.CurrentlyLoggedUser.Login})";
+            }
+        }
 
         public MainViewModel()
         {
