@@ -20,7 +20,7 @@ namespace Kanban.DataAccessLayer.Repositories
         public static void InsertJob(Job job, out bool successful)
         {
             string attributes = MySqlInsertBuilder.JoinNames("name", "description",
-                 "state", "difficulty", "estimated_time", "start_datetime", "deadline_date","author_id", "master_table_id");
+                 "state", "difficulty", "estimated_work_time", "start_datetime", "deadline_datetime","author_id", "master_table_id");
             MySqlQueriesWrapper.Insert(job, attributes, JOB_NAME, out successful);
         }
 

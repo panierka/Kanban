@@ -22,13 +22,15 @@ namespace Kanban.DataAccessLayer.Entities
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime? DeadlineDate { get; set; }
 
-        public int? AuthorId { get; set; }
-        public int? TableId { get; set; }
+        public int AuthorId { get; set; }
+        public int TableId { get; set; }
         public List<Subtask> Subtasks { get; set; } = new();
 
-        public Job(string name)
+        public Job(string name, int tableId, int authorId)
         {
             Name = name;
+            TableId = tableId;
+            AuthorId = authorId;
         }
 
         public Job(MySqlDataReader reader)
@@ -62,6 +64,19 @@ namespace Kanban.DataAccessLayer.Entities
             };
         }
 
+        private string ReinterpretDifficultyLevel(DifficultyLevel value)
+        {
+            return value switch
+            {
+                DifficultyLevel.VERY_EASY => "very easy",
+                DifficultyLevel.EASY => "easy",
+                DifficultyLevel.MEDIUM => "medium",
+                DifficultyLevel.HARD => "hard",
+                DifficultyLevel.VERY_HARD => "very hard",
+                DifficultyLevel.NOT_SPECIFIED => "not specified"
+            };
+        }
+
         private StateLevel InterpretStateLevel(string raw)
         {
             return raw switch
@@ -72,6 +87,19 @@ namespace Kanban.DataAccessLayer.Entities
                 "waiting for review" => StateLevel.WAITING_FOR_REVIEW,
                 "completed" => StateLevel.COMPLETED,
                 _ => StateLevel.NOT_SPECIFIED
+            };
+        }
+
+        private string ReinterpretStateLevel(StateLevel value)
+        {
+            return value switch
+            {
+                StateLevel.AWAITING => "awaiting",
+                StateLevel.WORKED_ON => "worked on",
+                StateLevel.PUT_OFF => "put off",
+                StateLevel.WAITING_FOR_REVIEW => "waiting for review",
+                StateLevel.COMPLETED => "completed",
+                StateLevel.NOT_SPECIFIED => "not specified"
             };
         }
 
@@ -99,8 +127,8 @@ namespace Kanban.DataAccessLayer.Entities
             return MySqlInsertBuilder.JoinAttributes(
                Name,
                Description,
-               State,
-               Difficulty,
+               ReinterpretStateLevel(State),
+               ReinterpretDifficultyLevel(Difficulty),
                EstimatedTime,
                StartDate.ToString(MySqlVariableFormatter.DATE_FORMAT),
                DeadlineDate,

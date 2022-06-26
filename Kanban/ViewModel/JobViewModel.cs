@@ -13,11 +13,47 @@ using Kanban.Model;
 
 namespace Kanban.ViewModel
 {
-    internal class JobViewModel
+    internal class JobViewModel:BaseViewModel
     {
         public Job TargetJob { get; init; }
 
         private JobsManager jobsManager;
+        private SubtasksManager subtasksManager;
+        private Subtask? _currentSubtask;
+        private ICommand? _createNewSubtask;
+        private ICommand? _deleteCurrentSubtask;
+        public Subtask? CurrentSubtask
+        {
+            get => _currentSubtask;
+            set
+            {
+                _currentSubtask = value;
+                NotifyPropertyChanged(
+                nameof(CurrentSubtask),
+                nameof(IsCurrentSubtaskSelected));
+            }
+        }
+
+        public bool IsCurrentSubtaskSelected => CurrentSubtask is { };
+
+        public ICommand CreateNewSubtask => _createNewSubtask ??= new RelayCommand
+            (
+                _ =>
+                {
+                    var subtask = subtasksManager.CreateSubtask(TargetJob.Id!.Value);
+                    CurrentSubtask = subtask;
+                },
+                _ => TargetJob.Id is { }
+            );
+
+        public ICommand DeleteCurrentSubtask => _deleteCurrentSubtask ??= new RelayCommand
+            (
+                _ =>
+                {
+                    subtasksManager.DeleteSubtask(CurrentSubtask!);
+                },
+                _ => IsCurrentSubtaskSelected
+            );
 
         public JobViewModel(Job job, JobsManager jobsManager)
         {

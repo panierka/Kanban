@@ -1,4 +1,5 @@
 ﻿using Kanban.DataAccessLayer.Entities;
+using Kanban.DataAccessLayer.Wrappers;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,18 @@ namespace Kanban.DataAccessLayer.Repositories
 {
     internal static class SubtaskRepository
     {
+        private const string SUBTASK_NAME = "subtasks";
+
+        public static List<Subtask> GetAllSubtasks()
+        {
+            return MySqlQueriesWrapper.SelectAll("subtasks", x => new Subtask(x));
+        }
+
+        public static void InsertSubtask(Subtask subtask, out bool successful)
+        {
+            string attributes = MySqlInsertBuilder.JoinNames("text", "is_done", "master_task_id");
+            MySqlQueriesWrapper.Insert(subtask, attributes, SUBTASK_NAME, out successful);
+        }
         public static List<Subtask> GetSubtasksFromTask(int taskId)
         {
             List<Subtask> subtasks = new();
@@ -29,8 +42,12 @@ namespace Kanban.DataAccessLayer.Repositories
                     subtasks.Add(test);
                 }
             }
-
             return subtasks;
         }
+            public static void RemoveSubtask(Subtask subtask, out bool successful)
+            {
+                var condition = $"where id = {subtask.Id}";
+                MySqlQueriesWrapper.Remove(condition, SUBTASK_NAME, out successful);
+            }
     }
 }
