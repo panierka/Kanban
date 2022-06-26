@@ -1,4 +1,5 @@
 ﻿using Kanban.DataAccessLayer.Entities.Contracts;
+using Kanban.DataAccessLayer.Repositories;
 using Kanban.DataAccessLayer.Wrappers;
 using MySql.Data.MySqlClient;
 using System;
@@ -17,7 +18,7 @@ namespace Kanban.DataAccessLayer.Entities
         public DateTime StartDateTime { get; set; }
         public DateTime? DeadlineDateTime { get; set; }
 
-        public static readonly string DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+        public List<Table> Tables { get; set; } = new();
 
         public Project(string name)
         {
@@ -33,14 +34,21 @@ namespace Kanban.DataAccessLayer.Entities
             Description = interpreter.ReadStringNullable("description");
             StartDateTime = interpreter.ReadValue<DateTime>("start_datetime");
             DeadlineDateTime = interpreter.ReadValueNullable<DateTime>("deadline_datetime");
+
+            RefreshTables();
+        }
+
+        public void RefreshTables()
+        {
+            Tables = TablesRepository.GetTablesFromProject(Id!.Value);
         }
 
         public string ToInsert()
         {
             return MySqlInsertBuilder.JoinAttributes(Name, 
                 Description, 
-                StartDateTime.ToString(DATE_FORMAT), 
-                DeadlineDateTime?.ToString(DATE_FORMAT));
+                StartDateTime.ToString(MySqlVariableFormatter.DATE_FORMAT), 
+                DeadlineDateTime?.ToString(MySqlVariableFormatter.DATE_FORMAT));
         }
     }
 }

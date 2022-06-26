@@ -16,6 +16,7 @@ namespace Kanban.ViewModel
     internal class MainViewModel : BaseViewModel
     {
         private readonly ProjectsManager projectsManager;
+        private readonly TablesManager tablesManager;
 
         public ObservableCollection<Project> Projects
         {
@@ -24,6 +25,22 @@ namespace Kanban.ViewModel
             {
                 _projects = value;
                 NotifyPropertyChanged(nameof(Projects));
+                CurrentProject = Projects.Where(
+                    x => x.Id is not null && 
+                    x.Id == CurrentProject?.Id).FirstOrDefault();
+            }
+        }
+
+        public ObservableCollection<Table> CurrentProjectTables
+        {
+            get
+            {
+                if (CurrentProject is null)
+                {
+                    return new();
+                }
+
+                return new(CurrentProject.Tables);
             }
         }
 
@@ -31,8 +48,10 @@ namespace Kanban.ViewModel
             (
                 _ => 
                 {
-                    projectsManager.CreateProject();
+                    var newProject = projectsManager.CreateProject();
                     RefreshProjects();
+                    CurrentProject = newProject;
+                    SelectedTabIndex = 2;
                 }
             );
 
@@ -48,6 +67,17 @@ namespace Kanban.ViewModel
                 _ => CurrentProject is { }
             );
 
+        public ICommand CreateTable => _createTable ??= new RelayCommand
+            (
+                _ =>
+                {
+                    tablesManager.CreateTable(CurrentProject!.Id!.Value);
+                    CurrentProject.RefreshTables();
+                    NotifyPropertyChanged(nameof(CurrentProjectTables));
+                },
+                _ => CurrentProject is { } && CurrentProject.Id is { }
+            );
+
         public Project? CurrentProject
         {
             get => _currentProject;
@@ -58,7 +88,8 @@ namespace Kanban.ViewModel
                     nameof(CurrentProject), 
                     nameof(CurrentProjectName),
                     nameof(CurrentProjectDescription),
-                    nameof(IsCurrentProjectSelected));
+                    nameof(IsCurrentProjectSelected),
+                    nameof(CurrentProjectTables));
             }
         }
 
@@ -87,7 +118,7 @@ namespace Kanban.ViewModel
                 RefreshProjects();
             }
         }
-
+        
         public int SelectedTabIndex
         {
             get => _selectedTabIndex;
@@ -107,6 +138,7 @@ namespace Kanban.ViewModel
         public MainViewModel()
         {
             projectsManager = new();
+            tablesManager = new();
             RefreshProjects();
         }
 
@@ -116,6 +148,8 @@ namespace Kanban.ViewModel
         private ICommand? _deleteCurrentProject;
         private Project? _currentProject;
         private int _selectedTabIndex;
+        private ICommand? _createTable;
+        private ICommand? _deleteTable;
         #endregion
     }
 }

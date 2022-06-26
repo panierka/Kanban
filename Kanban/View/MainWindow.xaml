@@ -50,6 +50,7 @@
                                 Grid.Row="0"
                                 ItemsSource="{Binding Projects}"
                                 SelectedItem="{Binding CurrentProject, Mode=OneWayToSource}"
+                                IsSynchronizedWithCurrentItem="True"
                                 SelectionMode="Single">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
@@ -78,12 +79,17 @@
                     </Grid>
 
                     <Grid
-                        Grid.Column="1">
+                        Grid.Column="1"
+                        Margin="0, 0, 30, 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60"/>
                             <RowDefinition Height="100"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
 
                         <TextBlock
                             Margin="30,0,0,0"
@@ -98,7 +104,7 @@
                             FontSize="24"
                             Text="{Binding CurrentProjectDescription}"/>
                         <ListBox
-                            ItemsSource="{Binding Projects}"
+                            ItemsSource="{Binding CurrentProjectTables}"
                             Grid.Row="2"
                             VerticalAlignment="Stretch">
                             <ListBox.ItemsPanel>
@@ -116,6 +122,21 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+
+                        <StackPanel  
+                            VerticalAlignment="Bottom"
+                            Grid.Row="2"
+                            Grid.Column="1">
+                            
+                            <Button    
+                                Height="60"
+                                Command="{Binding CreateTable}"
+                                Content="Dodaj tablicę"/>
+
+                            <Button    
+                                Height="60"
+                                Content="Usuń tablicę"/>
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </TabItem>
