@@ -195,7 +195,9 @@ namespace Kanban.ViewModel
             userAccountController.OnUserChanged += _ =>
             {
                 CurrentProject = null;
-                NotifyPropertyChanged(nameof(CanProjectSettingsBeDisplayed));
+                NotifyPropertyChanged(
+                    nameof(CanProjectSettingsBeDisplayed),
+                    nameof(IsCurrentProjectEditable));
             };
 
             RefreshProjects();
