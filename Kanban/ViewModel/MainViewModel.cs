@@ -23,11 +23,12 @@ namespace Kanban.ViewModel
             get => _projects;
             set
             {
+                int? lastId = CurrentProject?.Id;
                 _projects = value;
                 NotifyPropertyChanged(nameof(Projects));
                 CurrentProject = Projects.Where(
                     x => x.Id is not null && 
-                    x.Id == CurrentProject?.Id).FirstOrDefault();
+                    x.Id == lastId).FirstOrDefault();
             }
         }
 
@@ -83,12 +84,6 @@ namespace Kanban.ViewModel
             get => _currentProject;
             set
             {
-                if (CurrentProject == value)
-                {
-                    return;
-                }
-
-                //MessageBox.Show("student");
                 _currentProject = value;
                 NotifyPropertyChanged(
                     nameof(CurrentProject), 
