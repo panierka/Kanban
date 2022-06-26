@@ -13,8 +13,16 @@ using Kanban.Model;
 
 namespace Kanban.ViewModel
 {
-    internal class TaskViewModel
+    internal class JobViewModel
     {
         private JobsManager jobsManager;
+        private Job x;
+        private TablesManager tablesManager;
+
+        public JobViewModel(Job x, TablesManager tablesManager)
+        {
+            this.x = x;
+            this.tablesManager = tablesManager;
+        }
     }
 }

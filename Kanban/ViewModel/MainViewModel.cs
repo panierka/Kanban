@@ -43,7 +43,7 @@ namespace Kanban.ViewModel
                     return new();
                 }
 
-                return new(CurrentProject.Tables.Select(x => new TableViewModel(x)));
+                return new(CurrentProject.Tables.Select(x => new TableViewModel(x, tablesManager)));
             }
         }
 

@@ -27,5 +27,15 @@ namespace Kanban.Model
             TablesRepository.InsertTable(table, out _);
             return table;
         }
+
+        internal void UpdateTable(Table targetTable)
+        {
+            TablesRepository.UpdateTable(targetTable, out _);
+        }
+
+        internal bool CanUpdateTable(Table targetTable)
+        {
+            return true;
+        }
     }
 }

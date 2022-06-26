@@ -42,6 +42,16 @@ namespace Kanban.DataAccessLayer.Repositories
                 "start_datetime", "master_projet_id");
             MySqlQueriesWrapper.Insert(table, attributes, TABLE_NAME, out successful);
         }
+
+        public static void UpdateTable(Table table, out bool successful)
+        {
+            string dateFormat = MySqlVariableFormatter.DATE_FORMAT;
+            string attributeUpdates = $"name = {MySqlVariableFormatter.Format(table.Name)}, " +
+                $"description = {MySqlVariableFormatter.Format(table.Description)}, " +
+                $"start_datetime = {MySqlVariableFormatter.Format(table.StartDateTime.ToString(dateFormat))}, " +
+                $"master_projet_id = {MySqlVariableFormatter.Format(table.ProjectId)}";
+            MySqlQueriesWrapper.Update(table, attributeUpdates, TABLE_NAME, out successful);
+        }
     }
 }
 

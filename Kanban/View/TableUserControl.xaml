@@ -18,13 +18,15 @@
         </Grid.RowDefinitions>
         <TextBox 
             x:Name="table_name" 
-            Text="{Binding TargetTable.Name}"
+            Text="{Binding CurrentTableName, Mode=TwoWay}"
+            IsEnabled="{Binding IsCurrentTableEditable}"
             Grid.Row="0"
             TextAlignment="Center" 
             VerticalAlignment="Center"/>
         <TextBox 
             x:Name="table_description" 
-            Text="Opis" 
+            Text="{Binding CurrentTableDescription, Mode=TwoWay}" 
+            IsEnabled="{Binding IsCurrentTableEditable}"
             Grid.Row="1"
             TextAlignment="Left"
             VerticalAlignment="Stretch"
@@ -55,6 +57,14 @@
         </Grid>
         <ListBox 
             x:Name="tasks_lb"                
-            Grid.Row="3"/>
+            Grid.Row="3">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:TableUserControl 
+                            DataContext="{Binding Path=.}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
