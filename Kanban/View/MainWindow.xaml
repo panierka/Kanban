@@ -135,17 +135,21 @@
                         <ColumnDefinition Width="4*"/>
                     </Grid.ColumnDefinitions>
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="98*"/>
+                            <ColumnDefinition Width="221*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Kanban" Grid.Row="0" Margin="10" HorizontalAlignment="Center" Width="100" TextAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                        <TextBlock Text="Kanban" Margin="11,0,0,0" HorizontalAlignment="Left" Width="100" TextAlignment="Center" VerticalAlignment="Center" FontSize="20" Grid.Column="1"/>
 
                         <Grid
                             Grid.Row="1"
-                            Margin="10">
+                            Margin="10,10,10,10" Grid.ColumnSpan="2">
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -178,10 +182,10 @@
                         <TextBlock 
                             x:Name="username"
                             Grid.Row="2"
-                            HorizontalAlignment="Center"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"     
                             FontSize="20"     
-                            Text="{Binding CurrentUserName}"/>
+                            Text="{Binding CurrentUserName}" Grid.Column="1" Margin="61,0,0,0"/>
                     </Grid>
 
                     <Grid

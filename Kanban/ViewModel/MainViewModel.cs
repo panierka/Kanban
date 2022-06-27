@@ -310,7 +310,7 @@ namespace Kanban.ViewModel
             userAccountController.OnUserChanged += UpdateUser;
             userAccountController.OnUserChanged += _ =>
             {
-                CurrentProject = null;
+                CurrentProject = Projects.FirstOrDefault();
                 NotifyPropertyChanged(
                     nameof(CanProjectSettingsBeDisplayed),
                     nameof(IsCurrentProjectEditable));
