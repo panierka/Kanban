@@ -12,18 +12,31 @@ namespace Kanban.DataAccessLayer.Repositories
     {
         private const string TABLE_NAME = "users_projects";
 
-        public static List<UserProjectPermissions> GetAllUserProjectPermissions(int userId)
+        public static List<UserProjectPermissions> GetAllUserPermissions(int userId)
         {
             return MySqlQueriesWrapper.SelectAllOnCondition(TABLE_NAME,
                 $"{TABLE_NAME}.user_id = {userId}", x => new UserProjectPermissions(x));
         }
 
-        public static void InsertUserProjectPermissions(UserProjectPermissions project, 
+        public static List<UserProjectPermissions> GetAllProjectPermissions(int projectId)
+        {
+            return MySqlQueriesWrapper.SelectAllOnCondition(TABLE_NAME,
+                $"{TABLE_NAME}.project_id = {projectId}", x => new UserProjectPermissions(x));
+        }
+
+        public static void InsertUserProjectPermissions(UserProjectPermissions perm, 
             out bool successful)
         {
             string attributes = MySqlInsertBuilder.JoinNames("user_id", "project_id",
                 "assigned_since", "permissions");
-            MySqlQueriesWrapper.Insert(project, attributes, TABLE_NAME, out successful);
+            MySqlQueriesWrapper.Insert(perm, attributes, TABLE_NAME, out successful);
+        }
+
+        public static void RemoveUserProjectPermissions(UserProjectPermissions perm, 
+            out bool successful)
+        {
+            var condition = $"where id = {perm.Id}";
+            MySqlQueriesWrapper.Remove(condition, TABLE_NAME, out successful);
         }
     }
 }

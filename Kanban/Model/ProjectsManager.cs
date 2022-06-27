@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Kanban.DataAccessLayer.Repositories;
 using Kanban.DataAccessLayer.Entities;
+using System.Windows;
 
 namespace Kanban.Model
 {
@@ -25,7 +26,7 @@ namespace Kanban.Model
             }
 
             var permissions = UserProjectPermissionsRepository.
-                GetAllUserProjectPermissions(user.Id!.Value); 
+                GetAllUserPermissions(user.Id!.Value); 
 
             return ProjectsRepository.GetAllProjects()
                 .Where(x => permissions.Select(p => p.ProjectId)
@@ -54,14 +55,15 @@ namespace Kanban.Model
             return user is { };
         }
 
-        public bool CanUpdateProject(Project project)
+        public bool CanUpdateProject(Project? project)
         {
-            if (user is null)
+            if (project is null)
             {
                 return false;
             }
 
-            return true;
+            return GetMyPermissions(project)?.Level !=
+                UserProjectPermissions.PermissionLevel.USER;
         }
 
         public void UpdateProject(Project project)
@@ -72,6 +74,90 @@ namespace Kanban.Model
         public void DeleteProject(Project project)
         {
             ProjectsRepository.RemoveProject(project, out _);
+        }
+
+        public List<UserProjectPermissions> GetAllPermissions(Project project)
+        {
+            return UserProjectPermissionsRepository.GetAllProjectPermissions(project.Id!.Value);
+        }
+        
+        public UserProjectPermissions? GetMyPermissions(Project project)
+        {
+            if (user is null)
+            {
+                return null;
+            }
+
+            return GetAllPermissions(project).FirstOrDefault(x => x.UserId == user.Id);
+        }
+
+        public bool CanUpdatePermissions(Project? project)
+        {
+            if (project is null)
+            {
+                return false;
+            }
+
+            return GetMyPermissions(project)?.Level == 
+                UserProjectPermissions.PermissionLevel.SUPER_ADMIN;
+        }
+
+        public void SetPermissionsToUser(string login, Project project,
+            UserProjectPermissions.PermissionLevel level)
+        {
+            if (!CanUpdatePermissions(project) || project.Id is null)
+            {
+                return;
+            }
+
+            var otherUser = UsersRepository.GetUserFromLogin(login);
+
+            if (otherUser is null)
+            {
+                MessageBox.Show($"Nie istnieje użytkownik z loginem {login}");
+                return;
+            }
+
+            var permissions = UserProjectPermissionsRepository
+                .GetAllUserPermissions(otherUser.Id!.Value)
+                .FirstOrDefault(x => x.ProjectId == project.Id);
+
+            if (permissions is { })
+            {
+                UserProjectPermissionsRepository.RemoveUserProjectPermissions(permissions, out _);
+            }
+
+            permissions = new UserProjectPermissions(otherUser.Id!.Value, project.Id!.Value)
+            {
+                Level = level
+            };
+
+            UserProjectPermissionsRepository.InsertUserProjectPermissions(permissions, out _);
+        }
+
+        public void RemovePermissionsFromUser(string login, Project project)
+        {
+            if (!CanUpdatePermissions(project) || project.Id is null)
+            {
+                return;
+            }
+
+            var otherUser = UsersRepository.GetUserFromLogin(login);
+
+            if (otherUser is null)
+            {
+                MessageBox.Show($"Nie istnieje użytkownik z loginem {login}");
+                return;
+            }
+
+            var permissions = UserProjectPermissionsRepository
+                .GetAllUserPermissions(otherUser.Id!.Value)
+                .FirstOrDefault(x => x.ProjectId == project.Id);
+
+            if (permissions is { })
+            {
+                UserProjectPermissionsRepository.RemoveUserProjectPermissions(permissions, out _);
+            }
         }
     }
 }

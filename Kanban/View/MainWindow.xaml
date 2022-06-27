@@ -278,6 +278,8 @@
                             <RowDefinition Height="100"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBox
                                 Grid.Row="0"
@@ -334,6 +336,56 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox>
+                        </Grid>
+
+                        <ListBox
+                            ItemsSource="{Binding ProjectPermissions}"
+                            Grid.Row="4">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="5*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="{Binding UsersName}" Grid.Column="0"/>
+                                        <TextBlock Text=" --- " Grid.Column="1"/>
+                                        <TextBlock Text="{Binding LevelAsString}" Grid.Column="2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <Grid
+                            Grid.Row="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox
+                                Text="{Binding LoginToGrantPermissionsTo}"
+                                Grid.Column="0"/>
+
+                            <ComboBox 
+                                ItemsSource="{Binding PossiblePermissionLevels}"
+                                SelectedItem="{Binding SelectedPermissionLevel}"
+                                Grid.Column="1"/>
+
+                            <Button
+                                Content="Dodaj uprawnienia"
+                                Command="{Binding AddUserWithPermissions}"
+                                Grid.Column="2"/>
+
+                            <Button
+                                Content="Usuń uprawnienia"
+                                Command="{Binding DeleteUserWithPermissions}"
+                                Grid.Column="3"/>
+
                         </Grid>
                     </Grid>
                 </Grid>

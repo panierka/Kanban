@@ -1,4 +1,5 @@
 ﻿using Kanban.DataAccessLayer.Entities.Contracts;
+using Kanban.DataAccessLayer.Repositories;
 using Kanban.DataAccessLayer.Wrappers;
 using MySql.Data.MySqlClient;
 using System;
@@ -16,6 +17,8 @@ namespace Kanban.DataAccessLayer.Entities
         public int ProjectId { get; set; }
         public DateTime AssignedSince { get; set; }
         public PermissionLevel Level { get; set; } = PermissionLevel.USER;
+
+        public string UsersName => UsersRepository.GetUserFromId(UserId)?.Name ?? string.Empty;
 
         public string LevelAsString => Level switch
         {
