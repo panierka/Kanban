@@ -20,6 +20,18 @@ namespace Kanban.ViewModel
         private readonly TablesManager tablesManager;
         private readonly JobsManager jobsManager;
 
+        public ObservableCollection<JobViewModel> CurrentProjectJobs
+        {
+            get
+            {
+                if (TargetTable is null)
+                {
+                    return new();
+                }
+                return new(TargetTable.Jobs.Select(x => new JobViewModel(x, jobsManager)));
+            }
+        }
+
         public Job? CurrentJob
         {
             get => _currentJob;
@@ -40,6 +52,8 @@ namespace Kanban.ViewModel
                 {
                     var job = jobsManager.CreateJob(TargetTable.Id!.Value);
                     CurrentJob = job;
+                    TargetTable.RefreshJobs();
+                    NotifyPropertyChanged(nameof(CurrentProjectJobs));
                 },
                 _ => TargetTable.Id is { }
             );
