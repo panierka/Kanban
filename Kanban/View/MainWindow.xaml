@@ -212,7 +212,8 @@
                         <ListBox
                             ItemsSource="{Binding CurrentProjectTables}"
                             Grid.Row="2"
-                            VerticalAlignment="Stretch">
+                            VerticalAlignment="Stretch"
+                            SelectedItem="{Binding CurrentTable, Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel 
