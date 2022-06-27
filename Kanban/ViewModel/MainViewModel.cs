@@ -106,6 +106,7 @@ namespace Kanban.ViewModel
                     tablesManager.DeleteTable(CurrentTable!);
                     CurrentTable = null;
                     CurrentProject!.RefreshTables();
+                    NotifyPropertyChanged(nameof(CurrentProjectTables));
                 },
                 _ => IsCurrentTableSelected
             );
