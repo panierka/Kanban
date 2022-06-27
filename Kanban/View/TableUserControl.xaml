@@ -46,6 +46,7 @@
             <Button 
                 x:Name="remove_button" 
                 Content="Usuń" 
+                Command="{Binding DeleteCurrentJob}"
                 Grid.Column="2" 
                 IsEnabled="False"/>
         </Grid>
@@ -53,7 +54,7 @@
             x:Name="tasks_lb"      
             ItemsSource="{Binding TargetTableJobs}"
             Grid.Row="3"
-            SelectedItem="{Binding CurrentlySelectedJobViewModel, Mode=TwoWay}"
+            SelectedItem="{Binding CurrentlySelectedJobViewModel, Mode=OneWayToSource}"
             IsSynchronizedWithCurrentItem="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>

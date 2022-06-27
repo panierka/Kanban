@@ -55,6 +55,16 @@ namespace Kanban.ViewModel
                 _ => IsCurrentSubtaskSelected
             );
 
+        public string CurrentJobName
+        {
+            get => TargetJob?.Name ?? string.Empty;
+
+            set
+            {
+
+            }
+        }
+
         public JobViewModel(Job job, JobsManager jobsManager)
         {
             TargetJob = job;
