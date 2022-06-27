@@ -44,7 +44,19 @@ namespace Kanban.ViewModel
                     return new();
                 }
 
-                return new(CurrentProject.Tables.Select(x => new TableViewModel(x, tablesManager, jobsManager)));
+                List<TableViewModel> tableViewModels = new();
+                foreach(var table in CurrentProject.Tables)
+                {
+                    TableViewModel tableViewModel = new(table, tablesManager, jobsManager);
+                    tableViewModel.PropertyChanged += (s, e) =>
+                    {
+                        CurrentProject?.RefreshTables();
+                        NotifyPropertyChanged(nameof(CurrentProjectTables));
+                    };
+                    tableViewModels.Add(tableViewModel);
+                }
+
+                return new(tableViewModels);
             }
         }
 
