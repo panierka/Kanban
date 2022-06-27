@@ -237,11 +237,12 @@
                             
                             <Button    
                                 Height="60"
-                                Command="{Binding CreateTable}"
+                                Command="{Binding CreateNewTable}"
                                 Content="Dodaj tablicę"/>
 
                             <Button    
                                 Height="60"
+                                Command="{Binding DeleteCurrentTable}"
                                 Content="Usuń tablicę"/>
                         </StackPanel>
                     </Grid>

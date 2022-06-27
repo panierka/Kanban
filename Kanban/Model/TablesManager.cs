@@ -37,5 +37,10 @@ namespace Kanban.Model
         {
             return true;
         }
+
+        public void DeleteTable(Table table)
+        {
+            TablesRepository.RemoveTable(table, out _);
+        }
     }
 }

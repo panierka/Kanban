@@ -52,6 +52,12 @@ namespace Kanban.DataAccessLayer.Repositories
                 $"master_projet_id = {MySqlVariableFormatter.Format(table.ProjectId)}";
             MySqlQueriesWrapper.Update(table, attributeUpdates, TABLE_NAME, out successful);
         }
+
+        public static void RemoveTable(Table table, out bool successful)
+        {
+            var condition = $"where id = {table.Id}";
+            MySqlQueriesWrapper.Remove(condition, TABLE_NAME, out successful);
+        }
     }
 }
 

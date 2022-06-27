@@ -48,6 +48,18 @@ namespace Kanban.ViewModel
             }
         }
 
+        public Table? CurrentTable
+        {
+            get => _currentTable;
+            set
+            {
+                _currentTable = value;
+                NotifyPropertyChanged(
+                    nameof(CurrentTable),
+                    nameof(IsCurrentTableSelected));
+            }
+        }
+
         public ICommand CreateNewProject => _createNewProject ??= new RelayCommand
             (
                 _ => 
@@ -71,7 +83,7 @@ namespace Kanban.ViewModel
                 _ => CurrentProject is { }
             );
 
-        public ICommand CreateTable => _createTable ??= new RelayCommand
+        public ICommand CreateNewTable => _createNewTable ??= new RelayCommand
             (
                 _ =>
                 {
@@ -82,6 +94,18 @@ namespace Kanban.ViewModel
                 _ => CurrentProject is { } && CurrentProject.Id is { }
             );
 
+        public ICommand DeleteCurrentTable => _deleteCurrentTable ??= new RelayCommand
+            (
+                _ =>
+                {
+                    tablesManager.DeleteTable(CurrentTable!);
+                    CurrentTable = null;
+                    CurrentProject!.RefreshTables();
+                },
+                _ => IsCurrentTableSelected
+            );
+
+        public bool IsCurrentTableSelected => CurrentTable is { };
         public Project? CurrentProject
         {
             get => _currentProject;
@@ -216,8 +240,9 @@ namespace Kanban.ViewModel
         private ICommand? _deleteCurrentProject;
         private Project? _currentProject;
         private int _selectedTabIndex;
-        private ICommand? _createTable;
-        private ICommand? _deleteTable;
+        private ICommand? _createNewTable;
+        private ICommand? _deleteCurrentTable;
+        private Table? _currentTable;
         private ICommand? _tryLogIn;
         private ICommand? _register;
         #endregion
