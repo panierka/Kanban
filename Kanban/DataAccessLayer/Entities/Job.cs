@@ -73,7 +73,8 @@ namespace Kanban.DataAccessLayer.Entities
                 DifficultyLevel.MEDIUM => "medium",
                 DifficultyLevel.HARD => "hard",
                 DifficultyLevel.VERY_HARD => "very hard",
-                DifficultyLevel.NOT_SPECIFIED => "not specified"
+                DifficultyLevel.NOT_SPECIFIED => "not specified",
+                _ => "very easy"
             };
         }
 

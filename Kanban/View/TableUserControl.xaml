@@ -47,8 +47,7 @@
                 x:Name="remove_button" 
                 Content="Usuń" 
                 Command="{Binding DeleteCurrentJob}"
-                Grid.Column="2" 
-                IsEnabled="False"/>
+                Grid.Column="2"/>
         </Grid>
         <ListBox 
             x:Name="tasks_lb"      

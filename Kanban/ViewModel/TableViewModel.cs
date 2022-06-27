@@ -17,12 +17,17 @@ namespace Kanban.ViewModel
     {
         public Table TargetTable { get; set; }
 
+        public event Action? OnChangeStructure;
+
         private readonly TablesManager tablesManager;
         private readonly JobsManager jobsManager;
 
         public JobViewModel CurrentlySelectedJobViewModel
         {
-            set => CurrentJob = value?.TargetJob;
+            set
+            {
+                CurrentJob = value?.TargetJob;
+            }
         }
 
         public ObservableCollection<JobViewModel> CurrentProjectJobs
@@ -59,6 +64,7 @@ namespace Kanban.ViewModel
                     CurrentJob = job;
                     TargetTable.RefreshJobs();
                     NotifyPropertyChanged(nameof(CurrentProjectJobs));
+                    OnChangeStructure?.Invoke();
                 },
                 _ => TargetTable.Id is { }
             );
@@ -71,6 +77,7 @@ namespace Kanban.ViewModel
                     CurrentJob = null;
                     TargetTable.RefreshJobs();
                     NotifyPropertyChanged(nameof(CurrentProjectJobs));
+                    OnChangeStructure?.Invoke();
                 },
                 _ => IsCurrentJobSelected
             );

@@ -48,14 +48,10 @@ namespace Kanban.ViewModel
                 foreach(var table in CurrentProject.Tables)
                 {
                     TableViewModel tableViewModel = new(table, tablesManager, jobsManager);
-                    tableViewModel.PropertyChanged += (s, e) =>
+                    tableViewModel.OnChangeStructure += () =>
                     {
                         CurrentProject?.RefreshTables();
-
-                       if (e.PropertyName == nameof(tableViewModel.CurrentProjectJobs))
-                       {
-                            NotifyPropertyChanged(nameof(CurrentProjectTables));
-                       }
+                        NotifyPropertyChanged(nameof(CurrentProjectTables));
                     };
                     tableViewModels.Add(tableViewModel);
                 }
