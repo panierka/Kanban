@@ -58,11 +58,13 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Text="{Binding UserLogin, Mode=TwoWay}"
+                            MaxLength="64"
                             HorizontalContentAlignment="Center"/>
                         <PasswordBox 
                             Name="password_box"
                             Grid.Row="2"
                             Grid.Column="1"
+                            MaxLength="64"
                             HorizontalContentAlignment="Center"/>
                         <Button 
                             Grid.Row="3" 
@@ -96,16 +98,19 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             Text="{Binding NewUserName, Mode=TwoWay}"
+                            MaxLength="255"
                             HorizontalContentAlignment="Center"/>
                         <TextBox 
                             Grid.Row="1"
                             Grid.Column="1"
+                            MaxLength="64"
                             Text="{Binding NewUserLogin, Mode=TwoWay}"
                             HorizontalContentAlignment="Center"/>
                         <PasswordBox 
                             Name="password_box1"
                             Grid.Row="2"
                             Grid.Column="1"
+                            MaxLength="64"
                             HorizontalContentAlignment="Center"/>
                         <Button 
                             Grid.Row="3" 
@@ -284,19 +289,21 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBox
-                                Grid.Row="0"
-                                Text="{Binding CurrentProjectName, Mode=TwoWay}"
-                                Height="25"
-                                Width="500"
-                                TextAlignment="Center"
-                                VerticalContentAlignment="Center"
-                                IsEnabled="{Binding IsCurrentProjectEditable}"/>
+                            Grid.Row="0"
+                            Text="{Binding CurrentProjectName, Mode=TwoWay}"
+                            Height="25"
+                            Width="500"
+                            TextAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            MaxLength="255"
+                            IsEnabled="{Binding IsCurrentProjectEditable}"/>
                         <TextBox
-                                Grid.Row="1"
-                                Text="{Binding CurrentProjectDescription, Mode=TwoWay}"
-                                Height="80"
-                                Width="1000"
-                                IsEnabled="{Binding IsCurrentProjectEditable}"/>
+                            Grid.Row="1"
+                            Text="{Binding CurrentProjectDescription, Mode=TwoWay}"
+                            Height="80"
+                            Width="1000"
+                            MaxLength="4096"
+                            IsEnabled="{Binding IsCurrentProjectEditable}"/>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -371,6 +378,7 @@
 
                             <TextBox
                                 Text="{Binding LoginToGrantPermissionsTo}"
+                                MaxLength="64"
                                 Grid.Column="0"/>
 
                             <ComboBox 
