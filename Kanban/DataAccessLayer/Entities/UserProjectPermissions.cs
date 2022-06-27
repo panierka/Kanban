@@ -56,7 +56,6 @@ namespace Kanban.DataAccessLayer.Entities
         public string ToInsert()
         {
             return MySqlInsertBuilder.JoinAttributes(
-                    Id,
                     UserId,
                     ProjectId,
                     AssignedSince.ToString(MySqlVariableFormatter.DATE_FORMAT),

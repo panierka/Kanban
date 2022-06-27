@@ -19,8 +19,17 @@ namespace Kanban.Model
 
         public List<Project> GetProjects()
         {
-            // filtrowanie względem uprawnień użytkownika
-            return ProjectsRepository.GetAllProjects();
+            if (user is null)
+            {
+                return new();
+            }
+
+            var permissions = UserProjectPermissionsRepository.
+                GetAllUserProjectPermissions(user.Id!.Value); 
+
+            return ProjectsRepository.GetAllProjects()
+                .Where(x => permissions.Select(p => p.ProjectId)
+                .ToList().Contains(x.Id!.Value)).ToList();
         }
 
         public Project CreateProject()
@@ -30,6 +39,12 @@ namespace Kanban.Model
                 StartDateTime = DateTime.Now,                
             };
             ProjectsRepository.InsertProject(project, out _);
+            UserProjectPermissions perm = new(user!.Id!.Value, project!.Id!.Value)
+            {
+                AssignedSince = DateTime.Now,
+                Level = UserProjectPermissions.PermissionLevel.SUPER_ADMIN
+            };
+            UserProjectPermissionsRepository.InsertUserProjectPermissions(perm, out _);
 
             return project;
         }

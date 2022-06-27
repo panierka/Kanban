@@ -229,6 +229,7 @@ namespace Kanban.ViewModel
             void UpdateUser(User? user)
             {
                 projectsManager.SetUser(user);
+                RefreshProjects();
                 tablesManager.SetUser(user);
                 jobsManager.SetUser(user);
             };
