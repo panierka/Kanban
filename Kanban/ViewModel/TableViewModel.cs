@@ -50,7 +50,9 @@ namespace Kanban.ViewModel
                 _currentJob = value;
                 NotifyPropertyChanged(
                     nameof(CurrentJob),
-                    nameof(IsCurrentJobSelected));
+                    nameof(IsCurrentJobSelected),
+                    nameof(JobViewModel.CurrentJobName),
+                    nameof(JobViewModel.CurrentJobDescription));
             }
         }
 
@@ -91,6 +93,7 @@ namespace Kanban.ViewModel
                 TargetTable.Name = value;
                 tablesManager.UpdateTable(TargetTable);
                 NotifyPropertyChanged(nameof(CurrentTableName));
+                
             }
         }
 
@@ -118,6 +121,7 @@ namespace Kanban.ViewModel
             this.tablesManager = tablesManager;
             this.jobsManager = jobsManager;
         }
+
 
         private ICommand? _createNewJob;
         private ICommand? _deleteCurrentJob;

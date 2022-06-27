@@ -15,6 +15,8 @@ namespace Kanban.ViewModel
 {
     internal class JobViewModel:BaseViewModel
     {
+        public List<Job.DifficultyLevel> DifficultyLevels { get; set; } = Enum.GetValues(typeof(Job.DifficultyLevel)).Cast<Job.DifficultyLevel>().ToList();
+        public List<Job.StateLevel> StateLevels { get; set; } = Enum.GetValues(typeof(Job.StateLevel)).Cast<Job.StateLevel>().ToList();
         public Job TargetJob { get; init; }
 
         private JobsManager jobsManager;
@@ -22,6 +24,7 @@ namespace Kanban.ViewModel
         private Subtask? _currentSubtask;
         private ICommand? _createNewSubtask;
         private ICommand? _deleteCurrentSubtask;
+
         public Subtask? CurrentSubtask
         {
             get => _currentSubtask;
@@ -57,11 +60,76 @@ namespace Kanban.ViewModel
 
         public string CurrentJobName
         {
-            get => TargetJob?.Name ?? string.Empty;
-
+            get => TargetJob.Name ?? string.Empty;
             set
             {
+                TargetJob.Name = value;
+                jobsManager.UpdateJob(TargetJob);
+                NotifyPropertyChanged(nameof(CurrentJobName));
 
+            }
+        }
+
+        public string CurrentJobDescription
+        {
+            get => TargetJob.Description ?? string.Empty;
+            set
+            {
+                TargetJob.Description = value;
+                jobsManager.UpdateJob(TargetJob);
+                NotifyPropertyChanged(nameof(CurrentJobDescription));
+            }
+        }
+
+        public string CurrentJobStartDate => TargetJob?
+            .StartDate.ToString("dd-MM-yyyy") ?? string.Empty;
+
+        public string CurrentJobDeadlineDate
+        {
+            get => TargetJob?.DeadlineDate?.ToString("dd-MM-yyyy") ?? string.Empty;
+            set
+            {
+                if (TargetJob is null || !DateTime.TryParse(value, out var date))
+                {
+                    return;
+                }
+
+                TargetJob.DeadlineDate = date;
+                jobsManager.UpdateJob(TargetJob);
+            }
+        }
+
+
+        public TimeSpan CurrentJobEstimatedTime
+        {
+            get => TargetJob.EstimatedTime ?? TimeSpan.Zero;
+            set
+            {
+                TargetJob.EstimatedTime = value;
+                jobsManager.UpdateJob(TargetJob);
+                NotifyPropertyChanged(nameof(CurrentJobEstimatedTime));
+            }
+        }
+
+        public Job.DifficultyLevel CurrentJobDifficulty
+        {
+            get => TargetJob.Difficulty;
+            set
+            {
+                TargetJob.Difficulty = value;
+                jobsManager.UpdateJob(TargetJob);
+                NotifyPropertyChanged(nameof(CurrentJobDifficulty));
+            }
+        }
+
+        public Job.StateLevel CurrentJobState
+        {
+            get => TargetJob.State;
+            set
+            {
+                TargetJob.State = value;
+                jobsManager.UpdateJob(TargetJob);
+                NotifyPropertyChanged(nameof(CurrentJobState));
             }
         }
 

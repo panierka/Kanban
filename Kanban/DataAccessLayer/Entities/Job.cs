@@ -21,6 +21,8 @@ namespace Kanban.DataAccessLayer.Entities
         public TimeSpan? EstimatedTime { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime? DeadlineDate { get; set; }
+        public string DifficultyAsString => ReinterpretDifficultyLevel(Difficulty);
+        public string StateAsString => ReinterpretStateLevel(State);
 
         public int AuthorId { get; set; }
         public int TableId { get; set; }
@@ -128,8 +130,8 @@ namespace Kanban.DataAccessLayer.Entities
             return MySqlInsertBuilder.JoinAttributes(
                Name,
                Description,
-               ReinterpretStateLevel(State),
-               ReinterpretDifficultyLevel(Difficulty),
+               StateAsString,
+               DifficultyAsString,
                EstimatedTime,
                StartDate.ToString(MySqlVariableFormatter.DATE_FORMAT),
                DeadlineDate,

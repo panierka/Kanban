@@ -52,5 +52,19 @@ namespace Kanban.DataAccessLayer.Repositories
             var condition = $"where id = {job.Id}";
             MySqlQueriesWrapper.Remove(condition, JOB_NAME, out successful);
         }
+
+        public static void UpdateJob(Job job, out bool successful)
+        {
+            string dateFormat = MySqlVariableFormatter.DATE_FORMAT;
+            string attributeUpdates = $"name = {MySqlVariableFormatter.Format(job.Name)}, " +
+                $"description = {MySqlVariableFormatter.Format(job.Description)}, " +
+                $"state = {MySqlVariableFormatter.Format(job.StateAsString)}, " +
+                $"difficulty = {MySqlVariableFormatter.Format(job.DifficultyAsString)}, " +
+                $"estimated_work_time = {MySqlVariableFormatter.Format(job.EstimatedTime)}, " +
+                $"start_datetime = {MySqlVariableFormatter.Format(job.StartDate.ToString(dateFormat))}, " +
+                $"deadline_datetime = {MySqlVariableFormatter.Format(job.DeadlineDate?.ToString(dateFormat))}, " +
+                $"master_table_id = {MySqlVariableFormatter.Format(job.TableId)}";
+            MySqlQueriesWrapper.Update(job, attributeUpdates, JOB_NAME, out successful);
+        }
     }
 }

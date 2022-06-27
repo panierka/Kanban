@@ -28,6 +28,11 @@ namespace Kanban.Model
             return job;
         }
 
+        internal void UpdateJob(Job targetJob)
+        {
+            JobsRepository.UpdateJob(targetJob, out _);
+        }
+
         internal void DeleteJob(Job job)
         {
             JobsRepository.RemoveJob(job, out _);
