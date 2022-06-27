@@ -37,18 +37,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button 
                 x:Name="add_button" 
                 Content="Dodaj" 
                 Grid.Column="0"
                 Command="{Binding CreateNewJob}"/>
-            <Button 
-                x:Name="modify_button" 
-                Content="Edytuj" 
-                Grid.Column="1" 
-                IsEnabled="False"/>
             <Button 
                 x:Name="remove_button" 
                 Content="Usuń" 
@@ -59,7 +53,7 @@
             x:Name="tasks_lb"      
             ItemsSource="{Binding TargetTableJobs}"
             Grid.Row="3"
-            SelectedItem="{Binding CurrentlySelectedJobViewModel, Mode=OneWayToSource}"
+            SelectedItem="{Binding CurrentlySelectedJobViewModel, Mode=TwoWay}"
             IsSynchronizedWithCurrentItem="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>

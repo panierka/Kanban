@@ -51,7 +51,11 @@ namespace Kanban.ViewModel
                     tableViewModel.PropertyChanged += (s, e) =>
                     {
                         CurrentProject?.RefreshTables();
-                        NotifyPropertyChanged(nameof(CurrentProjectTables));
+
+                        if (e.PropertyName == nameof(tableViewModel.CurrentProjectJobs))
+                        {
+                            NotifyPropertyChanged(nameof(CurrentProjectTables));
+                        }
                     };
                     tableViewModels.Add(tableViewModel);
                 }
