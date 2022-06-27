@@ -60,7 +60,7 @@ namespace Kanban.DataAccessLayer.Repositories
                 $"description = {MySqlVariableFormatter.Format(job.Description)}, " +
                 $"state = {MySqlVariableFormatter.Format(job.StateAsString)}, " +
                 $"difficulty = {MySqlVariableFormatter.Format(job.DifficultyAsString)}, " +
-                $"estimated_work_time = {MySqlVariableFormatter.Format(job.EstimatedTime)}, " +
+                $"estimated_work_time = {MySqlVariableFormatter.Format(job.EstimatedTime?.Ticks)}, " +
                 $"start_datetime = {MySqlVariableFormatter.Format(job.StartDate.ToString(dateFormat))}, " +
                 $"deadline_datetime = {MySqlVariableFormatter.Format(job.DeadlineDate?.ToString(dateFormat))}, " +
                 $"master_table_id = {MySqlVariableFormatter.Format(job.TableId)}";

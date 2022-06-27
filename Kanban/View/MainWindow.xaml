@@ -135,17 +135,16 @@
                         <ColumnDefinition Width="4*"/>
                     </Grid.ColumnDefinitions>
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="98*"/>
-                            <ColumnDefinition Width="221*"/>
-                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Kanban" Margin="11,0,0,0" HorizontalAlignment="Left" Width="100" TextAlignment="Center" VerticalAlignment="Center" FontSize="20" Grid.Column="1"/>
+                        <TextBlock Text="Kanban" 
+                                   HorizontalAlignment="Center" 
+                                   TextAlignment="Center" 
+                                   FontSize="20"/>
 
                         <Grid
                             Grid.Row="1"

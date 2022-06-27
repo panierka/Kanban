@@ -44,7 +44,13 @@ namespace Kanban.DataAccessLayer.Entities
             Description = interpreter.ReadStringNullable("description");
             Difficulty = InterpretDifficultyLevel(interpreter.ReadString("difficulty"));
             State = InterpretStateLevel(interpreter.ReadString("state"));
-            EstimatedTime = interpreter.ReadValueNullable<TimeSpan>("estimated_work_time");
+
+            var ticks = interpreter.ReadValueNullable<long>("estimated_work_time");
+            if (ticks is not null)
+            {
+                EstimatedTime = TimeSpan.FromTicks(ticks.Value);
+            }
+
             StartDate = interpreter.ReadValue<DateTime>("start_datetime");
             DeadlineDate = interpreter.ReadValueNullable<DateTime>("deadline_datetime");
             AuthorId = interpreter.ReadValue<int>("author_id");
@@ -132,9 +138,9 @@ namespace Kanban.DataAccessLayer.Entities
                Description,
                StateAsString,
                DifficultyAsString,
-               EstimatedTime,
+               EstimatedTime?.Ticks,
                StartDate.ToString(MySqlVariableFormatter.DATE_FORMAT),
-               DeadlineDate,
+               DeadlineDate?.ToString(MySqlVariableFormatter.DATE_FORMAT),
                AuthorId,
                TableId
                );
