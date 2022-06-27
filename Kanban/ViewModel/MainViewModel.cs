@@ -138,7 +138,9 @@ namespace Kanban.ViewModel
                     nameof(CurrentProjectTables),
                     nameof(CanProjectSettingsBeDisplayed),
                     nameof(ProjectStartDate),
-                    nameof(ProjectDeadlineDate));
+                    nameof(ProjectDeadlineDate),
+                    nameof(ProjectPermissions),
+                    nameof(IsCurrentProjectEditable));
             }
         }
 
@@ -246,6 +248,56 @@ namespace Kanban.ViewModel
             }
         }
 
+        public ObservableCollection<UserProjectPermissions> ProjectPermissions
+        {
+            get
+            {
+                if (CurrentProject is null)
+                {
+                    return new();
+                }
+
+                return new(projectsManager.GetAllPermissions(CurrentProject));
+            }
+        }
+
+        public string LoginToGrantPermissionsTo { get; set; } = string.Empty;
+
+        public List<UserProjectPermissions.PermissionLevel> PossiblePermissionLevels 
+        {
+            get => typeof(UserProjectPermissions.PermissionLevel)
+                .GetEnumValues()
+                .Cast<UserProjectPermissions.PermissionLevel>()
+                .ToList();
+        }
+
+        public UserProjectPermissions.PermissionLevel SelectedPermissionLevel { get; set; }
+
+        public ICommand AddUserWithPermissions => _addUserWithPermissions ??= new RelayCommand
+            (
+                _ =>
+                {
+                    projectsManager.SetPermissionsToUser(
+                        LoginToGrantPermissionsTo,
+                        CurrentProject!,
+                        SelectedPermissionLevel);
+                    NotifyPropertyChanged(nameof(ProjectPermissions));
+                },
+                _ => IsCurrentProjectSelected && projectsManager.CanUpdatePermissions(CurrentProject!)
+            );
+
+        public ICommand DeleteUserWithPermissions => _deleteUserWithPermissions ??= new RelayCommand
+            (
+                _ => 
+                {
+                    projectsManager.RemovePermissionsFromUser(
+                        LoginToGrantPermissionsTo,
+                        CurrentProject!);
+                    NotifyPropertyChanged(nameof(ProjectPermissions));
+                },
+                _ => IsCurrentProjectSelected && projectsManager.CanUpdatePermissions(CurrentProject!)
+            );
+
         public MainViewModel()
         {
             userAccountController = new();
@@ -284,6 +336,8 @@ namespace Kanban.ViewModel
         private Table? _currentTable;
         private ICommand? _tryLogIn;
         private ICommand? _register;
+        private ICommand? _addUserWithPermissions;
+        private ICommand? _deleteUserWithPermissions;
         #endregion
     }
 }

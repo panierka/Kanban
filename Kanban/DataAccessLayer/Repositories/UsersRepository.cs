@@ -20,6 +20,20 @@ namespace Kanban.DataAccessLayer.Repositories
             return user;
         }
 
+        public static User? GetUserFromId(int id)
+        {
+            var condition = $"where id = {id}";
+            User? user = MySqlQueriesWrapper.GetRecord(condition, TABLE_NAME, x => new User(x));
+            return user;
+        }
+
+        public static User? GetUserFromLogin(string login)
+        {
+            var condition = $"where login = '{login}'";
+            User? user = MySqlQueriesWrapper.GetRecord(condition, TABLE_NAME, x => new User(x));
+            return user;
+        }
+
         public static bool CheckIfLoginIsTaken(string login)
         {
             var condition = $"where login = '{login}'";
