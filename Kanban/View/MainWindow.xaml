@@ -213,7 +213,8 @@
                             ItemsSource="{Binding CurrentProjectTables}"
                             Grid.Row="2"
                             VerticalAlignment="Stretch"
-                            SelectedItem="{Binding CurrentTable, Mode=OneWayToSource}">
+                            SelectedItem="{Binding CurrentlySelectedTableViewModel, Mode=OneWayToSource}"
+                            IsSynchronizedWithCurrentItem="True">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel 

@@ -48,6 +48,11 @@ namespace Kanban.ViewModel
             }
         }
 
+        public TableViewModel CurrentlySelectedTableViewModel
+        {
+            set => CurrentTable = value?.TargetTable; 
+        }
+
         public Table? CurrentTable
         {
             get => _currentTable;
