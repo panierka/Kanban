@@ -123,7 +123,7 @@
                         TextWrapping="Wrap"
                         Text="{Binding UserAccountInformation}"/>
                 </Grid>
-                
+
             </TabItem>
             <TabItem
                 Header="Zadania"
@@ -139,6 +139,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Kanban" Grid.Row="0" Margin="10" HorizontalAlignment="Center" Width="100" TextAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
 
@@ -174,15 +175,13 @@
                                 Width="175"/>
                         </Grid>
 
-                        <TextBox 
+                        <TextBlock 
                             x:Name="username"
                             Grid.Row="2"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center" 
-                            IsEnabled="false" 
-                            Margin="10"     
+                            VerticalAlignment="Center"     
                             FontSize="20"     
-                            Text="        "/>
+                            Text="{Binding CurrentUserName}"/>
                     </Grid>
 
                     <Grid
@@ -238,7 +237,7 @@
                             VerticalAlignment="Bottom"
                             Grid.Row="2"
                             Grid.Column="1">
-                            
+
                             <Button    
                                 Height="60"
                                 Command="{Binding CreateNewTable}"
@@ -392,5 +391,5 @@
             </TabItem>
         </TabControl>
     </Grid>
-    
+
 </Window>

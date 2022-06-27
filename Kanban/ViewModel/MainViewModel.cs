@@ -298,6 +298,8 @@ namespace Kanban.ViewModel
                 _ => IsCurrentProjectSelected && projectsManager.CanUpdatePermissions(CurrentProject!)
             );
 
+        public string CurrentUserName { get; set; }
+
         public MainViewModel()
         {
             userAccountController = new();
@@ -312,6 +314,12 @@ namespace Kanban.ViewModel
                 NotifyPropertyChanged(
                     nameof(CanProjectSettingsBeDisplayed),
                     nameof(IsCurrentProjectEditable));
+
+                if (userAccountController.CurrentlyLoggedUser is { })
+                {
+                    CurrentUserName = userAccountController.CurrentlyLoggedUser.Name;
+                    NotifyPropertyChanged(nameof(CurrentUserName));
+                }           
             };
 
             RefreshProjects();
