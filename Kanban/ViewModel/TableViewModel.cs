@@ -20,6 +20,11 @@ namespace Kanban.ViewModel
         private readonly TablesManager tablesManager;
         private readonly JobsManager jobsManager;
 
+        public JobViewModel CurrentlySelectedJobViewModel
+        {
+            set => CurrentJob = value?.TargetJob;
+        }
+
         public ObservableCollection<JobViewModel> CurrentProjectJobs
         {
             get
@@ -63,6 +68,9 @@ namespace Kanban.ViewModel
                 _ =>
                 {
                     jobsManager.DeleteJob(CurrentJob!);
+                    CurrentJob = null;
+                    TargetTable.RefreshJobs();
+                    NotifyPropertyChanged(nameof(CurrentProjectJobs));
                 },
                 _ => IsCurrentJobSelected
             );

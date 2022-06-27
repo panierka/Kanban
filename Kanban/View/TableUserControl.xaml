@@ -58,8 +58,9 @@
         <ListBox 
             x:Name="tasks_lb"      
             ItemsSource="{Binding TargetTableJobs}"
-            Grid.Row="3">
-
+            Grid.Row="3"
+            SelectedItem="{Binding CurrentlySelectedJobViewModel, Mode=OneWayToSource}"
+            IsSynchronizedWithCurrentItem="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <local:TaskUserControl 
