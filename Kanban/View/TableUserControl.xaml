@@ -57,8 +57,9 @@
             IsSynchronizedWithCurrentItem="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <local:TaskUserControl 
-                            DataContext="{Binding Path=.}"/>
+                    <local:TaskUserControl
+                        Width="400"
+                        DataContext="{Binding Path=.}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

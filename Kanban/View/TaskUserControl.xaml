@@ -4,56 +4,96 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Kanban.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="120" d:DesignWidth="160">
-    <Grid>
+             mc:Ignorable="d">
+    <Grid
+        Margin="0, 20, 0, 20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <TextBlock x:Name="task_name" Text="Nazwa" Grid.Column="0" Width="100" TextAlignment="Center" VerticalAlignment="Center" FontSize="5" IsEnabled="False" HorizontalAlignment="Center"/>
+            <TextBox 
+                x:Name="task_name" 
+                Text="Nazwa" 
+                Grid.Column="0" 
+                TextAlignment="Center" 
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center" Width="380"/>
         </Grid>
         <Grid Grid.Row="1">
-            <TextBox x:Name="task_description" Text="Coś tam" IsEnabled="False" FontSize="5"/>
+            <TextBox 
+                x:Name="task_description" 
+                Text="Coś tam"
+                 Width="380"/>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="beggining_time" Grid.Column="0" Text="Data" IsEnabled="False" FontSize="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="30" TextAlignment="Center"/>
-            <TextBox x:Name="deadline" Grid.Column="1" Text="deadline" IsEnabled="False" FontSize="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" TextAlignment="Center"/>
+            <TextBlock
+                x:Name="beggining_time" 
+                Grid.Column="0" 
+                Text="Data" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Right"
+                TextAlignment="Center"
+                 Width="190"/>
+            <TextBlock 
+                x:Name="deadline" 
+                Grid.Column="1" 
+                Text="deadline" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" 
+                TextAlignment="Center"
+                 Width="190"/>
         </Grid>
+
         <Grid Grid.Row="3">
-            <TextBox x:Name="estimated_worktime" Text="ew" IsEnabled="False" HorizontalAlignment="Center" Width="30" FontSize="5" TextAlignment="Center" VerticalAlignment="Center"/>
-        </Grid>
-        <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ComboBox x:Name="difficulty" Grid.Column="0" IsEnabled="False" Width="60" FontSize="5" VerticalAlignment="Center" Height="10"/>
-            <ComboBox x:Name="state" Grid.Column="1" IsEnabled="False" Width="60" FontSize="5" VerticalAlignment="Center" Height="10"/>
+            <TextBox
+                Grid.Column="0" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Right"
+                TextAlignment="Center" Width="190"/>
+            <TextBox 
+                Grid.Column="1" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" 
+                TextAlignment="Center" Width="190"/>
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <TextBox 
+                x:Name="estimated_worktime" 
+                Text="ew" 
+                HorizontalAlignment="Center" 
+                TextAlignment="Center" 
+                VerticalAlignment="Center" Width="380"/>
         </Grid>
         <Grid Grid.Row="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="60"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="add" Content="Dodaj" Grid.Column="0" FontSize="3" Width="30" Height="8"/>
-                <Button x:Name="remove" Content="Usuń" Grid.Column="1" FontSize="3" Width="30" Height="8"/>
-            </Grid>
-            <ListBox Grid.Row="1" x:Name="subtasks"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ComboBox 
+                x:Name="difficulty" 
+                Grid.Column="0" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Center"  Width="190"/>
+            <ComboBox 
+                x:Name="state" 
+                Grid.Column="1" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center"  Width="190"/>
         </Grid>
     </Grid>
 </UserControl>

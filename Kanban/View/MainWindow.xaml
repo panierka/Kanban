@@ -227,7 +227,8 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <local:TableUserControl 
-                                        Width="400"
+                                        Width="420"
+                                        HorizontalAlignment="Center"
                                         DataContext="{Binding Path=.}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
