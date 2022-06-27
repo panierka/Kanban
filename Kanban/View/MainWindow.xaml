@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kanban.View"
         xmlns:vm="clr-namespace:Kanban.ViewModel"
+        xmlns:val="clr-namespace:Kanban.View.Validators"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1600"
         ResizeMode="NoResize">
@@ -312,16 +313,26 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <ComboBox x:Name="origin_day" Width="30" Height="20" Margin="-200,5,5,5" IsEnabled="False"/>
-                                <ComboBox x:Name="origin_month" Width="30" Height="20" Margin="-80,5,5,5" IsEnabled="False"/>
-                                <ComboBox x:Name="origin_year" Width="50" Height="20" Margin="60,5,5,5" IsEnabled="False"/>
-                            </Grid>
-                            <Grid Grid.Column="1">
-                                <ComboBox x:Name="deadline_day" Width="30" Height="20" Margin="-250,5,5,5" IsEnabled="False"/>
-                                <ComboBox x:Name="deadline_month" Width="30" Height="20" Margin="-130,5,5,5" IsEnabled="False"/>
-                                <ComboBox x:Name="deadline_year" Width="50" Height="20" Margin="20,5,5,5" IsEnabled="False"/>
-                            </Grid>
+
+                            <TextBox 
+                                Grid.Column="0"
+                                IsEnabled="False"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding ProjectStartDate, Mode=OneWay}"/>
+
+                            <TextBox 
+                                Grid.Column="1"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+
+                                <Binding Path="ProjectDeadlineDate" 
+                                    UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <val:DateTimeValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -124,7 +124,9 @@ namespace Kanban.ViewModel
                     nameof(CurrentProjectDescription),
                     nameof(IsCurrentProjectSelected),
                     nameof(CurrentProjectTables),
-                    nameof(CanProjectSettingsBeDisplayed));
+                    nameof(CanProjectSettingsBeDisplayed),
+                    nameof(ProjectStartDate),
+                    nameof(ProjectDeadlineDate));
             }
         }
 
@@ -213,6 +215,24 @@ namespace Kanban.ViewModel
         }
 
         public bool IsAnyUserLogged => userAccountController.CurrentlyLoggedUser is { };
+
+        public string ProjectStartDate => CurrentProject?
+            .StartDateTime.ToString("dd-MM-yyyy") ?? string.Empty;
+
+        public string ProjectDeadlineDate
+        {
+            get => CurrentProject?.DeadlineDateTime?.ToString("dd-MM-yyyy") ?? string.Empty;
+            set
+            {
+                if (CurrentProject is null || !DateTime.TryParse(value, out var date))
+                {
+                    return;
+                }
+
+                CurrentProject.DeadlineDateTime = date;
+                projectsManager.UpdateProject(CurrentProject!);
+            }
+        }
 
         public MainViewModel()
         {
