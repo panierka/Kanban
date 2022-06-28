@@ -118,6 +118,12 @@ namespace Kanban.Model
                 return;
             }
 
+            if (otherUser.Id == user!.Id)
+            {
+                MessageBox.Show($"Niestety, nie da się.");
+                return;
+            }
+
             var permissions = UserProjectPermissionsRepository
                 .GetAllUserPermissions(otherUser.Id!.Value)
                 .FirstOrDefault(x => x.ProjectId == project.Id);
@@ -147,6 +153,12 @@ namespace Kanban.Model
             if (otherUser is null)
             {
                 MessageBox.Show($"Nie istnieje użytkownik z loginem {login}");
+                return;
+            }
+
+            if (otherUser.Id == user!.Id)
+            {
+                MessageBox.Show($"Niestety, nie da się.");
                 return;
             }
 

@@ -302,7 +302,7 @@ namespace Kanban.ViewModel
 
         public MainViewModel()
         {
-            userAccountController = new();
+            userAccountController = new(new SHA256Encryptor());
             projectsManager = new();
             tablesManager = new();
             jobsManager = new();

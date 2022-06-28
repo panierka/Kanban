@@ -11,6 +11,13 @@ namespace Kanban.Model
 {
     internal class UserAccountController
     {
+        private IEncryptor passwordEncryptor;
+
+        public UserAccountController(IEncryptor passwordEncryptor)
+        {
+            this.passwordEncryptor = passwordEncryptor;
+        }
+
         public User? CurrentlyLoggedUser
         {
             get => _currentlyLoggedUser;
@@ -25,7 +32,8 @@ namespace Kanban.Model
 
         public void TryLogin(string login, string password)
         {
-            var user = UsersRepository.GetUserFromLoginAndPassword(login, password);
+            var encryptedPassword = passwordEncryptor.Encrypt(password);
+            var user = UsersRepository.GetUserFromLoginAndPassword(login, encryptedPassword);
 
             if (user is null)
             {
@@ -45,7 +53,8 @@ namespace Kanban.Model
                 return;
             }
 
-            User newUser = new(name, login, password);
+            var encryptedPassword = passwordEncryptor.Encrypt(password);
+            User newUser = new(name, login, encryptedPassword);
             UsersRepository.AddUser(newUser);
 
             MessageBox.Show($"Pomyślnie utworzono konto dla {name}");

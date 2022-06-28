@@ -19,7 +19,7 @@ namespace Kanban.Model
 
         public Job CreateJob(int tableId)
         {
-            Job job = new("Nowe zadanie", tableId, 1)
+            Job job = new("Nowe zadanie", tableId, user!.Id!.Value)
             {
                 StartDate = DateTime.Now
             };
